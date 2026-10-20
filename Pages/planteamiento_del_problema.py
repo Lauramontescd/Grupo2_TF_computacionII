@@ -1,6 +1,7 @@
 import streamlit as st 
 
-st.html("<style>.stApp, .stApp * { color: white !important; background-color: #0E1117; }</style>")
+st.html("<style>.stApp, .stApp * { color: white !important; background-color: #0E1117; font-family: Arial, sans-serif; }</style>")
+
 
 st.title ("“Transformación y comportamiento de los incendios forestales en California, Texas y Oregon  (1992-2015).”")
 st.header ("Capítulo 1") 

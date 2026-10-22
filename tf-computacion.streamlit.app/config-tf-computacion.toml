@@ -1,4 +1,8 @@
 [theme]
-backgroundColor = "#0E1117  # Tu color de fondo principal
-textColor = "white     # Color de las letras
-font = "font-family: Arial, sans-serif;" #Tipografia 
+primaryColor = "#246B45"
+backgroundColor = "#080A09"
+secondaryBackgroundColor = "#1C211E"
+textColor = "#FFFFFF"
+font = "sans serif"
+[client]
+showSidebarNavigation = false

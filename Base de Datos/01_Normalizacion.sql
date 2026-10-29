@@ -74,10 +74,7 @@ GROUP BY STATE, COALESCE(FIPS_CODE, '000');
 /* TABLA DE HECHOS: FIRE_EVENT
    Justificación: Almacena el evento del incendio en sí. Contiene las métricas 
    (tamaño, latitud, longitud, fechas) y las llaves foráneas que conectan 
-   con las dimensiones. 
-   -Las fechas se insertan usando date() para convertir el formato 
-   Juliano original a texto 'YYYY-MM-DD', para facilitar los cálculos 
-   de estacionalidad.*/
+   con las dimensiones.*/
 
 CREATE TABLE fire_event (
     FOD_ID integer PRIMARY KEY,

@@ -1,5 +1,5 @@
 /* ============================================================================
- * SCRIPT 2: CREACIÓN DEL ESQUEMA DENORMALIZADO
+ * SCRIPT 3: CREACIÓN DEL ESQUEMA DENORMALIZADO
 ----------------------------------------------------------------------------
 PROYECTO: Evolución Temporal y Espacial de los Incendios en California, Texas y Oregón (1992-2015)
 BASE DE DATOS: SQLite (FPA_FOD_20170508)

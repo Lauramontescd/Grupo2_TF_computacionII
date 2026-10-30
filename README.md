@@ -38,3 +38,7 @@ Analizar la evolución temporal y espacial de los incendios en los estados de Ca
 * Cuantificar la variación en la frecuencia anual y/o estacional de los incendios, evaluando el alargamiento de la temporada.
 * Analizar la tendencia de la duración promedio en el periodo 1992-2015 en los estados de California, Texas y Oregón.
 * Determinar la severidad de los incendios dependiendo de su causa de origen, natural o humana.
+
+
+## Fuente de Datos 
+**1.88 Million US Wildfires** · Licencia **CC0 (Dominio público)** · Dataset  [Kaggle](https://www.kaggle.com/datasets/rtatman/188-million-us-wildfires)

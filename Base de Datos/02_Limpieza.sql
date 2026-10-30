@@ -33,8 +33,8 @@ SELECT
     FIRE_SIZE_CLASS,
     AVG(
         (
-            (CAST(substr(CONT_TIME, 1, 2) AS REAL) * 60 + CAST(substr(CONT_TIME, 3, 2) AS REAL)) -
-            (CAST(substr(DISCOVERY_TIME, 1, 2) AS REAL) * 60 + CAST(substr(DISCOVERY_TIME, 3, 2) AS REAL))
+            (CAST(strftime('%H', CONT_TIME) AS REAL) * 60 + CAST(strftime('%M', CONT_TIME) AS REAL)) -
+            (CAST(strftime('%H', DISCOVERY_TIME) AS REAL) * 60 + CAST(strftime('%M', DISCOVERY_TIME) AS REAL))
         ) / 60.0
     ) AS promedio_horas
 FROM fire_event
@@ -47,9 +47,7 @@ GROUP BY FIRE_SIZE_CLASS;
 -- Imputación de la hora de contención
 UPDATE fire_event
 SET CONT_TIME = time(
-    substr(DISCOVERY_TIME, 1, 2) || ':' || substr(DISCOVERY_TIME, 3, 2) || ':00',
-    '+' || (
-        SELECT ROUND(p.promedio_horas, 2) 
+    DISCOVERY_TIME, '+' || (SELECT ROUND(p.promedio_Horas, 2) 
         FROM promedios p 
         WHERE p.FIRE_SIZE_CLASS = fire_event.FIRE_SIZE_CLASS
     ) || ' hours'

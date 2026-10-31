@@ -12,7 +12,7 @@ al evitar la necesidad de múltiples JOINS.
 
 Para la población de las tablas se unieron e insertaron los datos directamente 
 de la base limpia y normalizada, partiendo de las tablas de normalización ya establecidas.
- */
+*/
 
 -- 1: garantiza la activación de claves foráneas (en caso de aún no tenerlas activadas)
 
@@ -27,15 +27,15 @@ PRAGMA foreign_keys = ON;
 -- cada registro de la tabla principal  y se facilita el análisis estandarizado por periodos.
 
 CREATE TABLE dim_date (
-    date_id TEXT PRIMARY KEY,       
+    date_id DATE PRIMARY KEY,       
     year INTEGER,                      
     month INTEGER,                    
     day INTEGER,
     DISCOVERY_DOY INTEGER,
-    DISCOVERY_TIME TEXT,
-    CONT_DATE TEXT,
+    DISCOVERY_TIME TIME,
+    CONT_DATE DATE,
     CONT_DOY INTEGER,
-    CONT_TIME TEXT
+    CONT_TIME TIME
 );
 
 -- DIMENSIÓN: UBICACIÓN (location)
@@ -46,8 +46,8 @@ CREATE TABLE dim_date (
 
 CREATE TABLE dim_location (
     location_id TEXT PRIMARY KEY,
-    FIPS_CODE TEXT,
-    STATE TEXT
+    FIPS_CODE VARCHAR,
+    STATE VARCHAR
 );
 
 -- DIMENSIÓN: CAUSA (cause)
@@ -57,7 +57,7 @@ CREATE TABLE dim_location (
 
 CREATE TABLE dim_cause (
     STAT_CAUSE_CODE INTEGER PRIMARY KEY,
-    STAT_CAUSE_DESCR TEXT
+    STAT_CAUSE_DESCR VARCHAR
 );
 
 -- TABLA DE HECHOS: INCENDIOS (fact_fires)
@@ -70,13 +70,14 @@ CREATE TABLE dim_cause (
 CREATE TABLE fact_fires (
     FOD_ID INTEGER PRIMARY KEY,
     FPA_ID TEXT,
-    dim_date_id TEXT,         
-    DISCOVERY_DATE TEXT,      
+    dim_date_id DATE,         
+    DISCOVERY_DATE DATE,      
     dim_location_id TEXT, 
     dim_cause_id INTEGER, 
-    FIRE_SIZE REAL,
-    LATITUDE REAL,
-    LONGITUDE REAL,
+    FIRE_SIZE FLOAT,
+    FIRE_SIZE_CLASS VARCHAR, 
+    LATITUDE FLOAT,
+    LONGITUDE FLOAT,
     
     FOREIGN KEY (dim_date_id) REFERENCES dim_date(date_id),
     FOREIGN KEY (DISCOVERY_DATE) REFERENCES dim_date(date_id), 
@@ -167,23 +168,29 @@ INSERT OR IGNORE INTO fact_fires (
     DISCOVERY_DATE,      
     dim_location_id,
     dim_cause_id,
-    FIRE_SIZE, 
+    FIRE_SIZE,
+    FIRE_SIZE_CLASS,
     LATITUDE, 
     LONGITUDE
 )
 SELECT 
     f.FOD_ID, 
     f.FPA_ID, 
-    SUBSTR(f.CONT_DATE, 9, 2) || SUBSTR(f.CONT_DATE, 6, 2) || SUBSTR(f.CONT_DATE, 1, 4),          
-    SUBSTR(f.CONT_DATE, 9, 2) || SUBSTR(f.CONT_DATE, 6, 2) || SUBSTR(f.CONT_DATE, 1, 4),      
-    f.FIPS_CODE,      
+    SUBSTR(f.DISCOVERY_DATE, 9, 2) || SUBSTR(f.DISCOVERY_DATE, 6, 2) || SUBSTR(f.DISCOVERY_DATE, 1, 4),          
+    SUBSTR(f.DISCOVERY_DATE, 9, 2) || SUBSTR(f.DISCOVERY_DATE, 6, 2) || SUBSTR(f.DISCOVERY_DATE, 1, 4),      
+    l.location_id,   
     f.STAT_CAUSE_CODE, 
     f.FIRE_SIZE, 
+    f.FIRE_SIZE_CLASS,
     f.LATITUDE, 
     f.LONGITUDE
 FROM (
-    SELECT FOD_ID, FPA_ID, CONT_DATE, FIPS_CODE, STAT_CAUSE_CODE, FIRE_SIZE, LATITUDE, LONGITUDE
+    SELECT FOD_ID, FPA_ID, CONT_DATE, DISCOVERY_DATE, FIPS_CODE, STAT_CAUSE_CODE, FIRE_SIZE, FIRE_SIZE_CLASS, LATITUDE, LONGITUDE
     FROM fire_event
-    WHERE CONT_DATE IS NOT NULL
+    WHERE DISCOVERY_DATE IS NOT NULL
     GROUP BY FOD_ID
-) f;
+) f
+LEFT JOIN dim_location l ON f.FIPS_CODE = l.fips_code;
+
+-- función para comprimir la data
+Vacuum;

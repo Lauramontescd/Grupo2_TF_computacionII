@@ -39,6 +39,27 @@ Analizar la evolución temporal y espacial de los incendios en los estados de Ca
 * Analizar la tendencia de la duración promedio en el periodo 1992-2015 en los estados de California, Texas y Oregón.
 * Determinar la severidad de los incendios dependiendo de su causa de origen, natural o humana.
 
+## Proceso de Normalización
+Se realizó la normalización de la base de datos de incendios forestales para eliminar la redundancia de datos. La tabla original se dividió en un esquema de estrella compuesto por dos tablas de dimensión (county y cause) para los catálogos, y una tabla de hechos (fire_event) para los 1.8 millones de eventos que posteriormente fueron filtrados por los estados relevantes para el estudio. Se declararon las llaves primarias y foráneas para mantener la integridad referencial, y se estandarizaron los tipos de datos de fechas y horas para facilitar su posterior migración y análisis en DuckDB.
+
+## Estructura del repositorio
+
+```text
+├── Base de Datos/
+│   ├── 01_Normalizacion.sql         # Script de diseño y tablas normalizadas
+│   ├── 02_Limpieza.sql              # Script de limpieza y depuración de datos
+│   ├── 03_Denormalizacion.sql       # Script de denormalización 
+│   ├── DICCIONARIO_DE_DATOS.md      # Diccionario de campos, tipos de datos y descripciones
+│   └── MODELADO_DE_DATOS.md         # Documentación de la arquitectura y modelo 3FN
+│
+├── streamlit_app/                   # Aplicación interactiva en Streamlit
+│   ├── Pages/                       # Secciones y vistas secundarias del dashboard
+│   ├── assets/                      # Recursos gráficos e imágenes
+│   ├── app.py                       # Código principal de la app
+│   └── requirements.txt             # Dependencias del proyecto
+│
+└── README.md                        # Presentación principal del repositorio 
+```
 
 ## Fuente de Datos 
 **1.88 Million US Wildfires** · Licencia **CC0 (Dominio público)** · Dataset  [Kaggle](https://www.kaggle.com/datasets/rtatman/188-million-us-wildfires)

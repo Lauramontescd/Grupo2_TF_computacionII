@@ -27,7 +27,7 @@ PRAGMA foreign_keys = ON;
 -- cada registro de la tabla principal  y se facilita el análisis estandarizado por periodos.
 
 CREATE TABLE dim_date (
-    date_id DATE PRIMARY KEY,       
+    date_id TEXT PRIMARY KEY,       
     year INTEGER,                      
     month INTEGER,                    
     day INTEGER,
@@ -70,8 +70,8 @@ CREATE TABLE dim_cause (
 CREATE TABLE fact_fires (
     FOD_ID INTEGER PRIMARY KEY,
     FPA_ID TEXT,
-    dim_date_id DATE,         
-    DISCOVERY_DATE DATE,      
+    dim_date_id TEXT,         
+    DISCOVERY_DATE TEXT,      
     dim_location_id TEXT, 
     dim_cause_id INTEGER, 
     FIRE_SIZE FLOAT,

@@ -3,10 +3,29 @@ import streamlit as st
 from Pages import planteamiento_del_problema, marco_teorico, marco_metodologico
 from Pages import analisis, conclusiones, cuestionario
 
+### esta paja es para quitar la vaina del menú del caché que aparece arriba
+
+st.markdown(
+    """
+    <style>
+        [data-testid="stSidebarNav"] {
+            display: none;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+
 st.set_page_config(page_title="FIRE DATA | Grupo 2", page_icon="FD", layout="wide", initial_sidebar_state="expanded")
 css_path = Path(__file__).resolve().parent / "assets" / "estilos.css"
 with css_path.open(encoding="utf-8") as archivo:
     st.markdown(f"<style>{archivo.read()}</style>", unsafe_allow_html=True)
+
+
+
+with st.sidebar.container(border=True):
+    st.image(r"c:\Users\admin\Desktop\memes dashboard\azieltraumada.jpeg", use_container_width=True)
 
 st.sidebar.markdown('<div class="brand">FIRE<span>DATA</span></div>', unsafe_allow_html=True)
 st.sidebar.caption("INVESTIGACIÓN ESTADÍSTICA · GRUPO 2")
@@ -51,3 +70,6 @@ if secciones[seleccion] is None:
     st.markdown('<div class="closing-panel"><div><div class="panel-kicker">GRUPO 2 · COMPUTACIÓN II</div><div class="panel-title">De los datos a la interpretación</div><p>Consulta el planteamiento, los fundamentos teóricos, la metodología y las secciones de análisis mediante el menú lateral.</p></div></div>', unsafe_allow_html=True)
 else:
     secciones[seleccion]()
+
+with st.container(border=True):
+     st.image(r"C:\Users\admin\Desktop\memes dashboard\jesus_sadico.jpg", use_container_width=True, caption="Jesus corrigiendo", width=250)

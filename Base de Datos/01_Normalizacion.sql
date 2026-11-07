@@ -6,23 +6,18 @@
    
    PROPÓSITO:
    La base original "Fires" contiene 1.8 millones de registros en una sola 
-   tabla plana con 39 columnas. Muchos datos de texto (como el nombre del 
-   condado o la descripción de la causa) se repiten millones de veces, 
+   tabla plana con 39 columnas. Muchos datos de texto se repiten millones de veces, 
    generando redundancia y haciendo las consultas lentas.
    
    Este script aplica la Tercera Forma Normal (3FN) dividiendo la tabla 
-   original en un esquema de 3 tablas (Dimensiones y Hechos) enfocado 
-   exclusivamente en las variables necesarias para el estudio.
+   original en un esquema de 3 tablas enfocado exclusivamente en las 
+   variables necesarias para el estudio.
    
    Para la poblacion de las tablas se insertaron los datos directamente de la 
    base original, utilizando especificamente la tabla Fires.
    ============================================================================ */
 
-
--- BLOQUE 1: TABLAS DE DIMENSIÓN 
--- ----------------------------------------------------------------------------
-
-/* DIMENSIÓN: CAUSA (cause)
+/* TABLA CAUSA (cause)
    Justificación: El código de causa (STAT_CAUSE_CODE) especifica la descripción 
    (STAT_CAUSE_DESCR) de la causa por la que se generó el incendio.
    Al crear su propia tabla, se evita que aparezca alguna de las 13 causas posibles 
@@ -43,7 +38,7 @@ WHERE STAT_CAUSE_CODE IS NOT NULL
 GROUP BY STAT_CAUSE_CODE;
 
 
-/* DIMENSIÓN: CONDADO (County)
+/* TABLA CONDADO (County)
    Justificación: El nombre del condado depende de la combinación de 
    Estado (STATE) y Código FIPS (FIPS_CODE). Se usa una llave primaria 
    compuesta porque un código FIPS se repite en diferentes estados. */
@@ -67,18 +62,13 @@ WHERE STATE IS NOT NULL
 GROUP BY STATE, COALESCE(FIPS_CODE, '000');
 
 
-
--- BLOQUE 2: TABLA DE HECHOS 
--- ----------------------------------------------------------------------------
-
-/* TABLA DE HECHOS: FIRE_EVENT
-   Justificación: Almacena el evento del incendio en sí. Contiene las métricas 
+/* TABLA DEL EVENTO (fire_event)
+   Justificación: Almacena el evento del incendio en sí. Contiene las caracteristicas del incendio
    (tamaño, latitud, longitud, fechas) y las llaves foráneas que conectan 
-   con las dimensiones.*/
+   con las demas tablas.*/
 
 CREATE TABLE fire_event (
     FOD_ID integer PRIMARY KEY,
-    FPA_ID text,
     DISCOVERY_DATE date,  
     DISCOVERY_DOY integer,
     DISCOVERY_TIME time,   
@@ -96,22 +86,19 @@ CREATE TABLE fire_event (
     FOREIGN KEY (STAT_CAUSE_CODE) REFERENCES cause(STAT_CAUSE_CODE)
 );
 
--- Poblamiento: Se insertan los 1.8 millones de registros asegurando la coincidencia 
--- exacta del orden de las columnas.
+-- Poblamiento: Se insertan los 1.8 millones de registros 
 INSERT INTO fire_event (
-    FOD_ID, FPA_ID, DISCOVERY_DATE, DISCOVERY_DOY, DISCOVERY_TIME, 
+    FOD_ID, DISCOVERY_DATE, DISCOVERY_DOY, DISCOVERY_TIME, 
     CONT_DATE, CONT_DOY, CONT_TIME, FIRE_SIZE, FIRE_SIZE_CLASS, 
     LATITUDE, LONGITUDE, STATE, FIPS_CODE, STAT_CAUSE_CODE
 )
 SELECT 
-    FOD_ID, 
-    FPA_ID, 
+    FOD_ID,  
     date(DISCOVERY_DATE), 
     DISCOVERY_DOY,
     substr(DISCOVERY_TIME, 1, 2) || ':' || substr(DISCOVERY_TIME, 3, 2) || ':00', 
     date(CONT_DATE),      
     CONT_DOY,
-    -- Convertimos '1730' a '17:30:00'
     substr(CONT_TIME, 1, 2) || ':' || substr(CONT_TIME, 3, 2) || ':00',
     FIRE_SIZE,
     FIRE_SIZE_CLASS,

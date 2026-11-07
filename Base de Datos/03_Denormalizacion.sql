@@ -85,7 +85,6 @@ FROM dias;
 
 CREATE TABLE fact_fires (
     FOD_ID INTEGER PRIMARY KEY,
-    FPA_ID TEXT,
     dim_date_id TEXT,            
     DISCOVERY_DATE TEXT,          
     dim_location_id TEXT,
@@ -108,7 +107,7 @@ CREATE TABLE fact_fires (
 
 INSERT INTO fact_fires
 SELECT
-    e.FOD_ID, e.FPA_ID,
+    e.FOD_ID, 
     strftime('%Y%m%d', e.DISCOVERY_DATE),
     e.DISCOVERY_DATE,
     e.STATE || e.FIPS_CODE,

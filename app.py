@@ -1,5 +1,6 @@
 from pathlib import Path
 import streamlit as st
+import duckdb
 from Pages import planteamiento_del_problema, marco_teorico, marco_metodologico
 from Pages import analisis, conclusiones, cuestionario
 
@@ -25,7 +26,7 @@ with css_path.open(encoding="utf-8") as archivo:
 
 
 with st.sidebar.container(border=True):
-    st.image(r"c:\Users\admin\Desktop\memes dashboard\azieltraumada.jpeg", use_container_width=True)
+    st.image("https://img.asmedia.epimg.net/resizer/v2/Z4WLK4VU3ZKWLERWGB3BWADEC4.jpg?auth=96f340a413886f920c669aba1a15067c087ce69d8e0efa63692cdb167a1d2dca&width=644&height=362&smart=true", use_container_width=True)
 
 st.sidebar.markdown('<div class="brand">FIRE<span>DATA</span></div>', unsafe_allow_html=True)
 st.sidebar.caption("INVESTIGACIÓN ESTADÍSTICA · GRUPO 2")
@@ -72,4 +73,4 @@ else:
     secciones[seleccion]()
 
 with st.container(border=True):
-     st.image(r"C:\Users\admin\Desktop\memes dashboard\jesus_sadico.jpg", use_container_width=True, caption="Jesus corrigiendo", width=250)
+     st.image("https://content.imageresizer.com/images/memes/elmo-fire-meme-29s5ao.jpg", use_container_width=True, caption="Jesus corrigiendo", width=250)

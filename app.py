@@ -1,6 +1,5 @@
 from pathlib import Path
 import streamlit as st
-import duckdb
 from Pages import planteamiento_del_problema, marco_teorico, marco_metodologico
 from Pages import analisis, conclusiones, cuestionario
 

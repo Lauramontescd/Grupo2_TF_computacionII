@@ -1,11 +1,11 @@
-# TF_computacionII
-## Evolución Temporal y Espacial de los Incendios en California, Texas y Oregón (1992-2015)
+![Banner del proyecto](assets/banner.png)
+# Análisis de la Evolución Temporal y Espacial de los Incendios en los estados de  California, Texas y Oregón (1992-2015)
 
 Este proyecto busca analizar cómo ha cambiado el comportamiento del fuego en tres estados de Estados Unidos (California, Texas y Oregón) entre 1992 y 2015. La investigación estudia, de forma individual para cada estado, la duración de las temporadas de incendios, la duración de los incendios, la ubicación de los focos más graves y la severidad según el origen del fuego (humano o natural).
 
 Para lograrlo, el proyecto se fundamenta en el procesamiento directo de la base de datos espacial de incendios FPA_FOD_20170508 (Short, 2017), que reúne más de 1,88 millones de registros de incendios provenientes de sistemas de notificación federales, estatales y locales de EE. UU.
 
-### Planteamiento del Problema
+## Planteamiento del Problema
 
 A lo largo de los años, estudios previos han documentado que, entre 1992 y 2015, los incendios en Estados Unidos aumentaron de tamaño y sus temporadas se alargaron. No obstante, dichos estudios suelen concentrarse en análisis territoriales aislados (Westerling, 2016), dejando un vacío sobre el comportamiento específico a escala estatal. Apoyándose en los avances teóricos y empíricos de estos antecedentes, surge la necesidad de estudiar de manera dirigida la evolución del comportamiento del fuego dentro de California, Texas y Oregón, tres estados caracterizados por geografías, climas y realidades humanas particulares.
 
@@ -14,7 +14,7 @@ Al procesar directamente la base de datos FPA_FOD_20170508, creada con anteriori
 * ¿Cómo es la migración geográfica en los focos más graves de los incendios en los estados de California, Texas y Oregón entre 1992 y 2015?
 * ¿Cuál es el cambio de la duración promedio de los incendios en California, Texas y Oregón entre 1992 y 2015?
 * ¿Cuánto varía la frecuencia anual y/o estacional de los incendios?
-* ¿Cuál es la tendencia de la duración promedio en el periodo 1992-2015 en los estados de California, Texas y Oregón?
+* ¿Cómo ha evolucionado la magnitud de los incendios en los estados de California, Texas y Oregón entre 1992 y 2015 ?
 * ¿Cuál es la severidad de los incendios dependiendo de su causa de origen?
 
 ### Justificación
@@ -36,11 +36,45 @@ Analizar la evolución temporal y espacial de los incendios en los estados de Ca
 * Evaluar la migración geográfica de los incendios en los estados de California, Texas y Oregón en los focos más graves entre 1992 y 2015.
 * Evaluar el cambio de la duración promedio de los incendios en California, Texas y Oregón entre 1992 y 2015.
 * Cuantificar la variación en la frecuencia anual y/o estacional de los incendios, evaluando el alargamiento de la temporada.
-* Analizar la tendencia de la duración promedio en el periodo 1992-2015 en los estados de California, Texas y Oregón.
+* Analizar la evolución temporal de la magnitud de los incendios en los estados de California, Texas y Oregon
 * Determinar la severidad de los incendios dependiendo de su causa de origen, natural o humana.
 
 ## Proceso de Normalización
-Se realizó la normalización de la base de datos de incendios forestales para eliminar la redundancia de datos. La tabla original se dividió en un esquema de estrella compuesto por dos tablas de dimensión (county y cause) para los catálogos, y una tabla de hechos (fire_event) para los 1.8 millones de eventos que posteriormente fueron filtrados por los estados relevantes para el estudio. Se declararon las llaves primarias y foráneas para mantener la integridad referencial, y se estandarizaron los tipos de datos de fechas y horas para facilitar su posterior migración y análisis en DuckDB.
+Se realizó la normalización de la base de datos de incendios forestales para eliminar la redundancia de datos y la dependencias transitivas. La tabla original se dividió en 3 tablas, una principal con los atributos del incendio, una para las causas estadísticas del incendio y otra para el condado. En la principal se almacenaron los 1.8 millones de eventos los cuales fueron reducidos despues de la limpieza y descarte de registros sin hora de descubrimiento del incendio y  que posteriormente fueron filtrados por los estados relevantes para el estudio y . Se declararon las llaves primarias y foráneas para mantener la integridad referencial, y se estandarizaron los tipos de datos de fechas y horas para facilitar su posterior migración y análisis en DuckDB.
+
+```mermaid
+erDiagram
+    county ||--o{ fire_event : "STATE, FIPS_CODE"
+    cause ||--o{ fire_event : "STAT_CAUSE_CODE"
+   county {
+        varchar STATE PK 
+        varchar FIPS_CODE PK 
+        varchar FIPS_NAME
+    }
+
+    cause {
+        int STAT_CAUSE_CODE PK 
+        varchar STAT_CAUSE_DESCR 
+    }
+
+    fire_event {
+        int FOD_ID PK
+        date DISCOVERY_DATE 
+        int DISCOVERY_DOY 
+        text DISCOVERY_TIME 
+        date CONT_DATE 
+        int CONT_DOY 
+        text CONT_TIME 
+        float FIRE_SIZE 
+        varchar FIRE_SIZE_CLASS 
+        float LATITUDE 
+        float LONGITUDE 
+        varchar STATE FK 
+        varchar FIPS_CODE FK 
+        int STAT_CAUSE_CODE FK 
+    }
+
+```
 
 ## Estructura del repositorio
 

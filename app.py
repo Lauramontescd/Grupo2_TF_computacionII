@@ -5,6 +5,11 @@ from Pages import analisis, conclusiones, cuestionario
 
 ### esta paja es para quitar la vaina del menú del caché que aparece arriba
 
+st.set_page_config(page_title="FIRE DATA | Grupo 2", page_icon="FD", layout="wide", initial_sidebar_state="expanded")
+css_path = Path(__file__).resolve().parent / "assets" / "estilos.css"
+with css_path.open(encoding="utf-8") as archivo:
+    st.markdown(f"<style>{archivo.read()}</style>", unsafe_allow_html=True)
+    
 st.markdown(
     """
     <style>
@@ -17,10 +22,6 @@ st.markdown(
 )
 
 
-st.set_page_config(page_title="FIRE DATA | Grupo 2", page_icon="FD", layout="wide", initial_sidebar_state="expanded")
-css_path = Path(__file__).resolve().parent / "assets" / "estilos.css"
-with css_path.open(encoding="utf-8") as archivo:
-    st.markdown(f"<style>{archivo.read()}</style>", unsafe_allow_html=True)
 
 
 

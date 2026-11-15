@@ -46,6 +46,26 @@ def _frase(t: dict, sujeto: str, unidad: str, decimales: int = 2) -> str:
         st.caption("Los años con pocos incendios graves son ruidosos; la tabla por periodo es más estable.")
 
 
+def _objetivo2(df: pd.DataFrame, estado: str) -> None:
+    st.subheader("Cambio de la duración promedio de los incendios")
+    usar = st.checkbox("Usar la duración corregida (recomendado)", value=True, key=f"corr_{estado}",
+                       help="En ~20.000 incendios multi-día la limpieza reemplazó la fecha de contención por "
+                            "«descubrimiento + 1 día». La columna CONT_DOY conserva el dato original y permite recuperarlo.")
+    columna = "duracion_corregida" if usar else "duracion_dias"
+    d = ind.duracion_anual(df, estado, columna)
+    serie = df.loc[df["estado"] == estado, columna]
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Duración media (días)", f"{serie.mean():.2f}")
+    c2.metric("Mediana (días)", f"{serie.median():.0f}")
+    c3.metric("Duran más de 1 día", f"{(serie > 1).mean() * 100:.1f} %")
+    st.line_chart(d[["media_dias"]])
+    st.write(_frase(ind.tendencia(d.index, d["media_dias"]), "la duración media", "días"))
+    st.caption("La duración se mide en días completos entre la fecha de descubrimiento y la de contención. "
+               "La distribución tiene cola larga (la mediana es casi siempre 0 días), por eso se reporta también el percentil 90.")
+    st.dataframe(d.round(2))
+
+
+
 
 def render():
     st.header("Análisis de resultados")

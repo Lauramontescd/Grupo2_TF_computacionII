@@ -81,7 +81,20 @@ def _objetivo3(df: pd.DataFrame, estado: str) -> None:
                 "incendios con cautela; el largo de la temporada y el perfil mensual dependen menos de ese efecto.")
      st.dataframe(temp.round(1))
 
-
+def _objetivo4(df: pd.DataFrame, estado: str) -> None:
+     st.subheader("Evolución de la magnitud de los incendios")
+     m = ind.magnitud_anual(df, estado)
+     st.markdown("**Superficie quemada por año (acres)**")
+     st.bar_chart(m["superficie_total_acres"])
+     st.write(_frase(ind.tendencia(m.index, m["superficie_total_acres"]), "la superficie quemada anual", "acres", 0))
+     st.markdown("**Tamaño típico y grande (acres): promedio y percentil 90**")
+     st.line_chart(m[["media_acres", "p90_acres"]])
+     st.write(_frase(ind.tendencia(m.index, m["p90_acres"]), "el tamaño del percentil 90", "acres"))
+     st.markdown("**Reparto por clase de tamaño (% de incendios por periodo)**")
+     st.dataframe(ind.clases_por_periodo(df, estado).round(1))
+     st.caption("La distribución del tamaño tiene cola muy larga: unos pocos incendios concentran casi toda la superficie. "
+                "Por eso se usan percentiles y totales, no solo el promedio.")
+     st.dataframe(m.round(2))
 
 
 

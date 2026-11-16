@@ -69,14 +69,13 @@ def _objetivo2(df: pd.DataFrame, estado: str) -> None:
     columna = "duracion_corregida" if usar else "duracion_dias"
     d = ind.duracion_anual(df, estado, columna)
     serie = df.loc[df["estado"] == estado, columna]
-    c1, c2, c3 = st.columns(3)
+    c1, c2 = st.columns(2)
     c1.metric("Duración media (días)", f"{serie.mean():.2f}")
-    c2.metric("Mediana (días)", f"{serie.median():.0f}")
-    c3.metric("Duran más de 1 día", f"{(serie > 1).mean() * 100:.1f} %")
+    c2.metric("Duran más de 1 día", f"{(serie > 1).mean() * 100:.1f} %")
     st.line_chart(d[["media_dias"]])
     st.write(_frase(ind.tendencia(d.index, d["media_dias"]), "la duración media", "días"))
     st.caption("La duración se mide en días completos entre la fecha de descubrimiento y la de contención. "
-               "La distribución tiene cola larga (la mediana es casi siempre 0 días), por eso se reporta también el percentil 90.")
+               "La distribución tiene cola larga, por eso se reporta también el percentil 90.")
     st.dataframe(d.round(2))
 
 def _objetivo3(df: pd.DataFrame, estado: str) -> None:

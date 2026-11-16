@@ -12,3 +12,4 @@ def render():
     resumen.index = resumen.index.map({"CA": "California", "OR": "Oregón", "TX": "Texas"})
     st.dataframe(resumen.round(2))
     st.caption("Redacta aquí las conclusiones de cada objetivo con estas cifras y las de la sección Análisis.")
+

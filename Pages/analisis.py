@@ -108,9 +108,29 @@ def _objetivo5(df: pd.DataFrame, estado: str) -> None:
     st.markdown("*Superficie quemada por año según el origen (acres)*")
     st.line_chart(ind.superficie_anual_por_grupo(df, estado))
 
+def render() -> None:
+    st.header("Análisis de resultados")
+    df = cargar_incendios()
+    estado = st.radio("Estado", list(NOMBRES_ESTADO), format_func=NOMBRES_ESTADO.get, horizontal=True)
+    n = int((df["estado"] == estado).sum())
+    st.caption(f"{n:,} incendios de {NOMBRES_ESTADO[estado]} con hora de descubrimiento registrada (1992–2015).")
+    t1, t2, t3, t4, t5 = st.tabs(["1 · Focos graves", "2 · Duración", "3 · Frecuencia y temporada",
+                                  "4 · Magnitud", "5 · Severidad por causa"])
+    with t1:
+        _objetivo1(df, estado)
+    with t2:
+        _objetivo2(df, estado)
+    with t3:
+        _objetivo3(df, estado)
+    with t4:
+        _objetivo4(df, estado)
+    with t5:
+        _objetivo5(df, estado)
+
 def render():
     st.header("Análisis de resultados")
     st.info("Sección preparada para incorporar los resultados obtenidos del procesamiento de la base de datos.")
     st.markdown("""**Indicadores por desarrollar:** frecuencia anual y estacional, duración de incendios, distribución geográfica de focos graves y superficie afectada según causa de origen.
 
 Los resultados y gráficos se incorporarán una vez que estén disponibles los datos procesados y validados.""")
+    

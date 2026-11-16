@@ -1,3 +1,4 @@
+from duckdb import df
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -63,6 +64,23 @@ def _objetivo2(df: pd.DataFrame, estado: str) -> None:
     st.caption("La duración se mide en días completos entre la fecha de descubrimiento y la de contención. "
                "La distribución tiene cola larga (la mediana es casi siempre 0 días), por eso se reporta también el percentil 90.")
     st.dataframe(d.round(2))
+
+def _objetivo3(df: pd.DataFrame, estado: str) -> None:
+     st.subheader("Frecuencia anual y estacional; duración de la temporada")
+     frec = ind.frecuencia_anual(df, estado)
+     st.bar_chart(frec)
+     st.write(_frase(ind.tendencia(frec.index, frec), "el número de incendios registrados", "incendios"))
+     temp = ind.temporada_anual(df, estado)
+     st.markdown("**Duración de la temporada** = días entre el percentil 5 y el percentil 95 de la fecha de descubrimiento de cada año.")
+     st.line_chart(temp[["largo_dias"]])
+     st.write(_frase(ind.tendencia(temp.index, temp["largo_dias"]), "la duración de la temporada", "días", 1))
+     st.markdown("**Distribución mensual (% de los incendios de cada periodo)**")
+     st.line_chart(ind.perfil_mensual(df, estado))
+     st.warning("Los conteos corresponden a los incendios que tienen hora de descubrimiento registrada; "
+                "esa proporción varía por año y estado (en Texas es muy baja). Interpreta la tendencia del número de "
+                "incendios con cautela; el largo de la temporada y el perfil mensual dependen menos de ese efecto.")
+     st.dataframe(temp.round(1))
+
 
 
 

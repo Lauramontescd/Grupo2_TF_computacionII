@@ -16,8 +16,8 @@ def _frase(t: dict, sujeto: str, unidad: str, decimales: int = 2) -> str:
     return (f"{sujeto[0].upper() + sujeto[1:]} {sentido} en promedio {abs(t['pendiente']):.{decimales}f} {unidad} "
             f"por año (R² = {t['r2']:.2f}; correlación de Spearman con el año = {t['rho']:.2f}).")
 
-    
-    def _objetivo1(df: pd.DataFrame, estado: str) -> None:
+
+def _objetivo1(df: pd.DataFrame, estado: str) -> None:
     st.subheader("Migración geográfica de los focos más graves")
     clase = st.select_slider("Tamaño mínimo para considerar un incendio «grave»", options=list(CLASES_GRAVES),
                              value="F", format_func=CLASES_GRAVES.get, key=f"clase_{estado}")

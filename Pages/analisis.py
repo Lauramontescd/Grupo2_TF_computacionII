@@ -1,3 +1,4 @@
+import duckdb
 from duckdb import df
 import streamlit as st
 import numpy as np
@@ -5,6 +6,19 @@ import pandas as pd
 
 import indicators as ind
 from data import NOMBRES_ESTADO, cargar_incendios
+
+@st.cache_resource
+def get_connection() -> duckdb.DuckDBPyConnection:
+    token = st.secrets["MOTHERDUCK_TOKEN"]
+    db = st.secrets.get("MOTHERDUCK_DB", "my_db")
+   
+    return duckdb.connect(f"md:{db}?motherduck_token={token}")
+
+
+@st.cache_data(ttl=600)  
+def run_query(sql: str) -> pd.DataFrame:
+    con = get_connection()
+    return con.sql(sql).df()
 
 CLASES_GRAVES = {"D": "D (100 acres o más)", "E": "E (300 o más)", "F": "F (1.000 o más)", "G": "G (5.000 o más)"}
 

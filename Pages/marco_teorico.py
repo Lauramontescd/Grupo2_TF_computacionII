@@ -89,34 +89,34 @@ def render():
         st.subheader ("Medidas de Posición")
         st.write ("Las medidas de posición, también llamadas fractiles o cuantiles, son utilizadas para facilitar la localización de un dato respecto de un conjunto de ellos. Para este estudio, se utilizarán:")
         st.markdown ("a- Cuartiles: Valores que dividen la serie en 4 partes iguales, cada una de ellas con un 25 % de los datos.")
-        st.markdown ("$$Q_k = L_i + \left[ \frac{\frac{k \cdot n}{4} - F_{i-1}}{f_i} \right] \cdot c$$")
+        st.latex(r"Q_k = L_i + \left[ \frac{\frac{k \cdot n}{4} - F_{i-1}}{f_i} \right] \cdot c")
         st.markdown ("b-Mediana: Promedio no matemático que divide a la serie de datos de un estudio, en dos partes iguales, que representan cada una el 50% de los datos.")
-        st.markdown ("$$\text{Me} = L_i + \left[ \frac{\frac{n}{2} - F_{i-1}}{f_i} \right] \cdot c$$")
+        st.latex(r"\text{Me} = L_i + \left[ \frac{\frac{n}{2} - F_{i-1}}{f_i} \right] \cdot c")
 
         st.subheader ("Medidas de Tendencia Central")
         st.write ("Son casos especiales de las medidas de posición, debido a su ubicación en la zona cntral de la distribución. Estas medidas, también son denominadas promedios.")
         st.markdown ("a-Media Aritmética: Es el valor resultante más **presentativo** de la serie de datos, el punto de equilibrio, el centro de gravedad de la serie.")
-        st.markdown ("$$\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}$$")
+        st.latex(r"\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}")
 
         st.markdown ("b- Mediana: Promedio no matemático que divide a la serie de datos de un estudio, en dos partes iguales, que representan cada una el 50% de los datos.")
-        st.markdown ("$$\text{Me} = L_i + \left[ \frac{\frac{n}{2} - F_{i-1}}{f_i} \right] \cdot c$$")
+        st.latex(r"\text{Me} = L_i + \left[ \frac{\frac{n}{2} - F_{i-1}}{f_i} \right] \cdot c")
 
         st.markdown ("b- Moda: Es un promedio no matemático representado por el valor con mayor frecuencia en la serie de datos.")
-        st.markdown ("$$\text{Mo} = L_i + \left[ \frac{f_{i} - f_{i-1}}{(f_{i} - f_{i-1}) + (f_{i} - f_{i+1})} \right] \cdot c$$")
+        st.latex(r"\text{Mo} = L_i + \left[ \frac{f_{i} - f_{i-1}}{(f_{i} - f_{i-1}) + (f_{i} - f_{i+1})} \right] \cdot c")
 
         st.subheader ("Medidas de Dispersión")
         st.write ("Tienen por objeto medir la magnitud de los desvíos de los valores de la variable con respecto al valor central de la distribución, es decir, definen cuán semejante o cuán distinto son cada uno de los valores, de la variable con respecto al valor central.")
         st.markdown ("a- Rango Intercuartílico: constituye la máxima diferencia posible entre dos valores entre el 50% de los datos centrales.")
-        st.markdown ("$$RI = Q_3 - Q_1$$")
+        st.latex(r"RI = Q_3 - Q_1")
 
         st.markdown ("b- Varianza: Es el promedio cuadrático de los desvíos de los datos respecto de la mdia aritmética.")
-        st.markdown ("$$s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}$$")
+        st.latex(r"s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}")
 
         st.markdown ("c-Desviación Típica: Es la raíz cuadrada positiva de la varianza. Constituye el índice de dispersión más usado y más confiable.")
-        st.markdown ("$$s = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}}$$")
+        st.latex(r"s = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}}")
 
         st.markdown ("d- Coeficiente de Variación de Pearson: Es el cociente entre la desviación estándar y la media aritmética, multiplicado por cien. Es el coeficiente de dispersión relativa de más amplio uso.")
-        st.markdown ("$$CV = \frac{s}{\bar{x}} \cdot 100$$")
+        st.latex(r"CV = \frac{s}{\bar{x}} \cdot 100")
 
 
 

@@ -29,7 +29,47 @@ valores y las observaciones de calidad detectadas durante el ETL.
 | `latitude` | FLOAT | FUENTE | `LATITUDE` | Latitud del punto de origen en grados decimales. Datum NAD83. |
 | `longitude` | FLOAT | FUENTE | `LONGITUDE` | Longitud del punto de origen en grados decimales. Datum NAD83. |
 | `DISCOVERY_TIME` | TEXT | FUENTE | `DISCOVERY_TIME` | Hora de detección en formato `HHMMSS`. **No interviene en ninguna medida reportada**; se conserva por completitud. |
-| `CONT_DATE` | DATE | FUENTE | `CONT_DATE` | Fecha de contención. cuya información se distribuye en la dimensión `dim_date`. comparte la clave foránea con `dim_date_id`. |
+| `CONT_DATE` | DATE | FUENTE | `CONT_DATE` | Fecha de contención. cuya información se distribuye en la dimensión `dim_date`. |
 | `cont_date_id` | DATE FK | CONSTRUIDO | `CONT_DATE` | Llave foránea hacia `dim_date`. comparte la clave con `dim_date_id`. |
 
 ---
+
+## Dimensión: `dim_date`
+
+**La variable segmentadora de la investigación.** No existe en la fuente: es una
+construcción del equipo. **Filas:** 8.767.
+
+| Campo | Tipo | Descripción |
+|---|---|---|
+| `date_id` | TEXT PK | Identificador de la categoría. |
+| `full_date` | TEXT | Fecha completa documentada. |
+| `year` | INTEGER | Año del incendio. |
+| `quarter` | INTEGER | Cada tres meses de incendios. |
+| `month` | INTEGER | Mes del año del incendio. |
+| `month_name` | TEXT | Nombre del mes. |
+| `day` | INTEGER | Día del incendio. |
+| `day_of_week` | INTEGER | Día de la semana del incendio. |
+| `day_name` | TEXT | Nombre del día de la semana del incendio. |
+| `is_weekend` | INTEGER | Fin de semana o no. (0 no, 1 sí)|
+| `DISCOVERY_DOY` | INTEGER | Día juliano de descubrimiento del incendio. |
+
+> **Nota metodológica.** 
+> Los datos de año, mes y día se juntaron como llave primaria convirtiéndola en texto
+> para evitar duplicaciones en las filas.
+
+---
+
+## Dimensión: `dim_cause`
+
+**La variable segmentadora de la investigación.** No existe en la fuente: es una
+construcción del equipo. **Filas:** 13.
+
+| Campo | Tipo | Descripción |
+|---|---|---|
+| `STAT_CAUSE_CODE` | INTEGER PK | Identificador de la categoría. |
+| `STAT_CAUSE_DESC` | VARCHAR | Causa del incendio. |
+
+---
+
+
+

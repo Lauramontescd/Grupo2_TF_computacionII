@@ -71,5 +71,72 @@ construcción del equipo. **Filas:** 13.
 
 ---
 
+## Dimensión: `dim_location`
 
+**La variable segmentadora de la investigación.** No existe en la fuente: es una
+construcción del equipo. **Filas:** 351.
 
+| Campo | Tipo | Descripción |
+|---|---|---|
+| `location_id` | TEXT PK | Identificador de la categoría. |
+| `FIPS_CODE` | VARCHAR | identificador numérico de la locación geográfica del incendio. |
+| `STATE` | VARCHAR | Estado del incendio por siglas postales "CA, OR, TX...". |
+| `state_name` | VARCHAR | Nombre del estado del incendio. |
+| `county_name` | VARCHAR | Nombre del condado del incendio. |
+
+---
+
+## Esquema del modelo denormalizado
+
+```mermaid
+erDiagram
+    dim_location ||--o{ fact_fires : "ubica (dim_location_id)"
+    dim_cause ||--o{ fact_fires : "origina (dim_cause_id)"
+    dim_date ||--o{ fact_fires : "fecha descubrimiento (dim_date_id)"
+    dim_date ||--o{ fact_fires : "fecha contencion (cont_date_id)"
+
+    dim_location {
+        TEXT location_id PK
+        VARCHAR FIPS_CODE
+        VARCHAR STATE
+        VARCHAR state_name
+        VARCHAR county_name
+    }
+
+    dim_cause {
+        INTEGER STAT_CAUSE_CODE PK
+        VARCHAR STAT_CAUSE_DESCR
+    }
+
+    dim_date {
+        TEXT date_id PK
+        TEXT full_date UK
+        INTEGER year
+        INTEGER quarter
+        INTEGER month
+        TEXT month_name
+        INTEGER day
+        INTEGER day_of_week
+        TEXT day_name
+        INTEGER is_weekend
+        INTEGER DISCOVERY_DOY
+    }
+
+    fact_fires {
+        INTEGER FOD_ID PK
+        TEXT FPA_ID
+        TEXT dim_date_id FK
+        TEXT DISCOVERY_DATE
+        TEXT dim_location_id FK
+        INTEGER dim_cause_id FK
+        FLOAT FIRE_SIZE
+        VARCHAR FIRE_SIZE_CLASS
+        FLOAT LATITUDE
+        FLOAT LONGITUDE
+        TIME DISCOVERY_TIME
+        DATE CONT_DATE
+        TEXT cont_date_id FK
+        INTEGER CONT_DOY
+        TIME CONT_TIME
+    }
+```

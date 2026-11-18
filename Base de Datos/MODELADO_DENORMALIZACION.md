@@ -4,8 +4,7 @@ Investigación sobre la evolución temporal y espacial de los incendios en los e
 
 ## Diccionario de datos
 
-Cada campo se documenta con su tipo, su origen en la fuente cruda, su dominio de
-valores y las observaciones de calidad detectadas durante el ETL.
+Cada campo se documenta con su tipo, su origen en la fuente Normalizada, y una breve descripción de la columna.
 
 **Convención de la columna "Origen":**
 - `FUENTE` — el campo proviene partiendo de la base de datos limpia y normalizada.

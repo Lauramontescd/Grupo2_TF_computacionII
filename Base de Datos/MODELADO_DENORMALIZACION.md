@@ -27,7 +27,7 @@ Cada campo se documenta con su tipo, su origen en la fuente Normalizada, y una b
 | `FIRE_SIZE_CLASS` | VARCHAR | FUENTE | `FIRE_SIZE_CLASS` | Clase del tamaño del incendio (tipo A, B...). |
 | `latitude` | FLOAT | FUENTE | `LATITUDE` | Latitud del punto de origen en grados decimales. Datum NAD83. |
 | `longitude` | FLOAT | FUENTE | `LONGITUDE` | Longitud del punto de origen en grados decimales. Datum NAD83. |
-| `DISCOVERY_TIME` | TEXT | FUENTE | `DISCOVERY_TIME` | Hora de detección en formato `HHMMSS`. **No interviene en ninguna medida reportada**; se conserva por completitud. |
+| `DISCOVERY_TIME` | TIME | FUENTE | `DISCOVERY_TIME` | Hora de detección en formato `HHMMSS`. **No interviene en ninguna medida reportada**; se conserva por completitud. |
 | `CONT_DATE` | DATE | FUENTE | `CONT_DATE` | Fecha de contención. cuya información se distribuye en la dimensión `dim_date`. |
 | `cont_date_id` | DATE FK | CONSTRUIDO | `CONT_DATE` | Llave foránea hacia `dim_date`. comparte la clave con `dim_date_id`. |
 

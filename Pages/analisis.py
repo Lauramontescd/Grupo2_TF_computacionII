@@ -60,6 +60,16 @@ def _objetivo1(df: pd.DataFrame, estado: str) -> None:
         st.line_chart(anual[["longitud_centro"]])
         st.caption("Los años con pocos incendios graves son ruidosos; la tabla por periodo es más estable.")
 
+        st.markdown(" ### Análisis de resultados")
+
+        Analisis_objetivo1 = {
+            "CA": "Entre 1992 y 2015 se registraron 956 incendios graves (de 1.000 acres o más) en California. Al comparar el primer periodo (1992–1999) con el más reciente (2008–2015), el centro geográfico de estos focos se desplazó 193 km hacia el noroeste. Además, el impacto creció notablemente: los grandes incendios aumentaron de 307 a 335 y la superficie quemada casi se duplicó, pasando de 2,42 a 4,38 millones de acres.",
+            "OR": "Entre 1992 y 2015 se registraron 585 incendios graves (de 1.000 acres o más) en Oregón. Al comparar el primer periodo (1992–1999) con el más reciente (2008–2015), el centro geográfico de estos focos se desplazó apenas 55 km hacia el sureste, manteniendo una ubicación muy estable . Sin embargo, su magnitud creció de formaconstante: los grandes incendios aumentaron de 143 a 232 y la superficie quemada más que se triplicó, pasando de 1,06 a 3,87 millones de acres.",
+            "TX": "Entre 1992 y 2015 se registraron 483 incendios graves (de 1.000 acres o más) en Texas. Al comparar el primer periodo (1992–1999) con el más reciente (2008–2015), el centro geográfico de estos focos se desplazó 325 km hacia el noroeste. Además, el impacto creció de forma drástica en el último periodo: los grandes incendios se multiplicaron casi por siete, pasando de 55 a 378, y la superficie quemada se disparó de 186.717 acres a más de 3,5 millones de acres.",
+        } 
+
+        st.info(Analisis_objetivo1.get(estado, "Análisis en proceso"))
+
 
 def _objetivo2(df: pd.DataFrame, estado: str) -> None:
     st.subheader("Cambio de la duración promedio de los incendios")
@@ -78,6 +88,17 @@ def _objetivo2(df: pd.DataFrame, estado: str) -> None:
                "La distribución tiene cola larga, por eso se reporta también el percentil 90.")
     st.dataframe(d.round(2))
 
+    st.markdown("### Análisis de resultados")
+
+    Analisis_objetivo2 = {
+        "CA": "Entre 1992 y 2015, los incendios registrados en California tuvieron una duración media de 1,05 días, y solo el 5,2 % logró extenderse por más de una jornada. Al observar la evolución anual del promedio, se evidencia una tendencia general al aumento respecto a los 1990’s (donde el promedio rondaba los 0,5 días), pasando a estabilizarse cerca de 1,0 día a partir del año 2000. Además, destacan dos picos atípicos muy marcados en 1999 (alrededor de 3,6 días) y 2008 (superando los 4,5 días), impulsados por temporadas de incendios excepcionalmente prolongados y difíciles de contener.",
+        "OR": "Entre 1992 y 2015, los incendios registrados en Oregón presentaron una duración media de 1,68 días, y un 15,0 % logró extenderse por más de una jornada, triplicando la proporción observada en California. Al observar la evolución anual, se aprecia una clara tendencia creciente: mientras en los años noventa el promedio se mantenía por debajo de 1,5 días, a partir del año 2000 los tiempos de contención aumentaron de forma constante. Destacan especialmente tres picos críticos en 2002 (cerca de 3,5 días), 2011 (alrededor de 2,8 días) y 2014 (superando los 4,2 días), reflejando incendios forestales cada vez más persistentes.",
+        "TX": "Entre 1992 y 2015, los incendios registrados en Texas tuvieron una duración media de 0,58 días, siendo los de más rápida extinción entre los tres estados analizados, aunque un 7,1 % logró superar el día de duración. Al observar la evolución anual, se distingue un crecimiento gradual desde los años noventa (con promedios menores a 0,5 días) hasta alcanzar un máximo pronunciado en 2006 (cerca de 1,9 días) y otros repuntes entre 2008 y 2009 (alrededor de 1,1 días). Sin embargo, a partir de 2010 los tiempos de contención volvieron a descender y se estabilizaron por debajo de los 0,4 días.",
+    }
+
+    st.info(Analisis_objetivo2.get(estado, "Análisis en proceso"))
+
+
 def _objetivo3(df: pd.DataFrame, estado: str) -> None:
      st.subheader("Frecuencia anual y estacional; duración de la temporada")
      frec = ind.frecuencia_anual(df, estado)
@@ -93,6 +114,18 @@ def _objetivo3(df: pd.DataFrame, estado: str) -> None:
                 "esa proporción varía por año y estado (en Texas es muy baja). Interpreta la tendencia del número de "
                 "incendios con cautela; el largo de la temporada y el perfil mensual dependen menos de ese efecto.")
      st.dataframe(temp.round(1))
+
+     st.markdown("### Análisis de resultados")
+     
+     Analisis_objetivo3 = {
+         
+             "CA": "Entre 1992 y 2015, el número de incendios registrados en California muestra una tendencia clara al crecimiento, aumentando en promedio 193,76 incendios por año (R² = 0,56; correlación de Spearman = 0,73). Al observar la evolución anual en el gráfico de barras, se distingue un salto notable a partir de 2011: mientras que entre 1992 y 2010 los registros solían mantenerse entre los 2.500 y 5.000 eventos anuales, en el tramo final (2011–2015) superaron frecuentemente los 7.000 a 8.800 incendios al año, reflejando tanto una mayor actividad como una mejor cobertura en el registro horario reciente.",
+             "OR": "Entre 1992 y 2015, el número de incendios registrados en Oregón muestra una tendencia prácticamente estable, con un leve aumento promedio de apenas 14,07 incendios por año (R² = 0,04; correlación de Spearman = 0,14). Al observar el gráfico de barras, se aprecia que la frecuencia anual permanece de forma irregular sin un crecimiento sostenido a largo plazo, moviéndose habitualmente entre los 1.000 y 2.500 eventos por año. Solo destacan repuntes puntuales al inicio de la serie en 1992 (más de 2.600 registros) y en los años finales de 2013 a 2015, alcanzando su máximo histórico en 2014 con cerca de 3.000 incendios.",
+             "TX": "Entre 1992 y 2015, el número de incendios registrados en Texas presenta una tendencia creciente de 59,07 incendios por año (R² = 0,32; correlación de Spearman = 0,83). Sin embargo, el gráfico de barras muestra un cambio en la captura de datos a partir de 2009: mientras entre 1992 y 2008 los registros anuales casi nunca superaban los 500 eventos, a partir de 2009 se dispararon por encima de los 1.300, alcanzando un pico extraordinario en 2011 con más de 3.500 incendios (coincidiendo con una sequía histórica y una mayor cobertura de reporte horario).",
+         }
+     
+     st.info(Analisis_objetivo3.get(estado, "Análisis en proceso"))
+     
 
 def _objetivo4(df: pd.DataFrame, estado: str) -> None:
      st.subheader("Evolución de la magnitud de los incendios")

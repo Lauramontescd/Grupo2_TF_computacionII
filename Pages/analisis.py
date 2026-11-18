@@ -142,6 +142,19 @@ def _objetivo4(df: pd.DataFrame, estado: str) -> None:
                 "Por eso se usan percentiles y totales, no solo el promedio.")
      st.dataframe(m.round(2))
 
+     st.markdown("### Análisis de resultados")
+          
+     Analisis_objetivo4 = {
+         
+             "CA": "Entre 1992 y 2015, la superficie quemada anual en California muestra una tendencia creciente, aumentando en promedio 17.869 acres por año (R² = 0,16; correlación de Spearman = 0,34). A diferencia de Texas donde un solo año concentra casi todo el daño, en California se observa una actividad destructiva recurrente y escalonada: destacan temporadas muy severas en 1999 (cerca de 750.000 acres), 2003 (casi 960.000 acres), 2007 (superando el millón de acres) y un máximo histórico en 2008 con más de 1,2 millones de acres quemados, manteniéndose en niveles altos entre 2012 y 2015.",
+             "OR": "Entre 1992 y 2015, la superficie quemada anual en Oregón muestra una tendencia creciente, aumentando en promedio 17.869 acres por año (R² = 0,16; correlación de Spearman = 0,34). A diferencia de otros estados donde un solo año domina todo el registro, en Oregón se observa una actividad destructiva recurrente y escalonada: destacan temporadas muy severas en 1999 (cerca de 750.000 acres), 2003 (casi 960.000 acres), 2007 (superando el millón de acres) y un máximo histórico en 2008 con más de 1,2 millones de acres quemados, manteniéndose en niveles altos entre 2012 y 2015.",
+             "TX": "Entre 1992 y 2015, la superficie quemada anual en Texas presenta un aumento promedio de 25.237 acres por año (R² = 0,09; correlación de Spearman = 0,51). El bajo valor de R² demuestra que el daño no crece de forma uniforme, sino concentrado en episodios extremos de sequía: mientras que en la mayoría de los años la superficie afectada fue mínima, destacan dos eventos catastróficos en 2006 (cerca de 1 millón de acres) y especialmente en 2011, año que concentra la mayor devastación del periodo con casi 3 millones de acres quemados.",
+        }
+          
+     st.info(Analisis_objetivo4.get(estado, "Análisis en proceso"))
+
+
+
 def _objetivo5(df: pd.DataFrame, estado: str) -> None:
     st.subheader("Severidad de los incendios según su causa")
     st.caption("Natural = rayo (código 1). Humana = causas 2 a 12. Sin determinar = código 13. "
@@ -153,6 +166,19 @@ def _objetivo5(df: pd.DataFrame, estado: str) -> None:
     st.bar_chart(sev[["pct_incendios", "pct_superficie"]])
     st.markdown("*Superficie quemada por año según el origen (acres)*")
     st.line_chart(ind.superficie_anual_por_grupo(df, estado))
+
+    st.markdown("### Análisis de resultados")
+         
+    Analisis_objetivo5 = {
+             
+            "CA": "Entre 1992 y 2015, de los 110.217 incendios registrados en California, las causas humanas dominan tanto en frecuencia como en extensión total, representando el 66,74% de los eventos (73.561 incendios) y el 58,44% de la superficie quemada (6.716.612,27 acres). Sin embargo, las causas naturales muestran una severidad individual notablemente mayor: aunque solo equivalen al 21,87% de los siniestros (24.100 incendios), concentran el 34,73% del área afectada (3.991.232,10 acres), lo que evidencia que los incendios originados por rayos tienden a alcanzar una magnitud promedio mucho más destructiva que los provocados por actividad humana, mientras que las causas sin determinar aportan el 11,39% de los casos y el 6,83% de los acres quemados.",
+            "OR": "A diferencia de los otros estados analizados, en Oregón (42.722 incendios registrados entre 1992 y 2015) las causas naturales lideran ampliamente tanto en ocurrencia como en impacto territorial. Los incendios originados por rayos representan el 62,02% del total de eventos (26.496 incendios) y son responsables del 85,87% de toda la superficie quemada (7.049.636 acres), lo que demuestra una severidad extrema por evento. En contraste, aunque las causas humanas generan el 36,10% de los focos (15.422 incendios), apenas explican el 13,52% del área devastada (1.110.284,37 acres), mientras que los siniestros de origen sin determinar tienen una incidencia marginal con el 1,88% de los casos y el 0,60% de la superficie afectada.",
+            "TX": "En Texas (14.276 incendios registrados entre 1992 y 2015), se observa la mayor preponderancia de la actividad humana como detonante de incendios forestales, concentrando el 82,85% de los eventos (11.827 incendios) y el 60,87% de la superficie total quemada (3.219.032,86 acres). No obstante, al evaluar la severidad relativa, tanto los incendios naturales como los de causa sin determinar presentan un impacto desproporcionado respecto a su frecuencia: las causas naturales representan apenas el 13,14% de los siniestros (1.876 incendios) pero abarcan el 23,77% de los acres quemados (1.257.202,87 acres), mientras que los eventos sin determinar, con solo el 4,01% de los casos (573 incendios), explican el 15,35% de la superficie afectada (811.706,81 acres), evidenciando una alta extensión promedio en estos dos últimos grupos.",
+            }
+         
+    st.info(Analisis_objetivo5.get(estado, "Análisis en proceso"))
+              
+    
 
 def render() -> None:
     st.header("Análisis de resultados")

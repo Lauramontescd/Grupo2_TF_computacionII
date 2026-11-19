@@ -33,9 +33,16 @@
                 "expr": {
                   "ThemeDataColor": {
                     "ColorId": 1,
-                    "Percent": 0
+                    "Percent": 0.1
                   }
                 }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
               }
             }
           }

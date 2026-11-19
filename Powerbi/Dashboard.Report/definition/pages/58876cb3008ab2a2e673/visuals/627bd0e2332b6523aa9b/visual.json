@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "627bd0e2332b6523aa9b",
   "position": {
-    "x": 1147.2222222222222,
-    "y": 166.66666666666669,
+    "x": 1037.5,
+    "y": 146.25,
     "z": 1002,
-    "height": 127.77777777777779,
-    "width": 355.55555555555554,
+    "height": 165,
+    "width": 632.5,
     "tabOrder": 1002
   },
   "visual": {
@@ -39,13 +39,6 @@
       "data": [
         {
           "properties": {
-            "numericEnd": {
-              "expr": {
-                "Literal": {
-                  "Value": "2014D"
-                }
-              }
-            },
             "mode": {
               "expr": {
                 "Literal": {
@@ -58,44 +51,7 @@
       ],
       "general": [
         {
-          "properties": {
-            "filter": {
-              "filter": {
-                "Version": 2,
-                "From": [
-                  {
-                    "Name": "m",
-                    "Entity": "main dim_date",
-                    "Type": 0
-                  }
-                ],
-                "Where": [
-                  {
-                    "Condition": {
-                      "Comparison": {
-                        "ComparisonKind": 4,
-                        "Left": {
-                          "Column": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "m"
-                              }
-                            },
-                            "Property": "year"
-                          }
-                        },
-                        "Right": {
-                          "Literal": {
-                            "Value": "2014D"
-                          }
-                        }
-                      }
-                    }
-                  }
-                ]
-              }
-            }
-          }
+          "properties": {}
         }
       ],
       "header": [
@@ -148,6 +104,13 @@
                   }
                 }
               }
+            },
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
             }
           }
         }
@@ -185,6 +148,11 @@
           }
         }
       ]
+    },
+    "syncGroup": {
+      "groupName": "year",
+      "fieldChanges": true,
+      "filterChanges": true
     },
     "drillFilterOtherVisuals": true
   }

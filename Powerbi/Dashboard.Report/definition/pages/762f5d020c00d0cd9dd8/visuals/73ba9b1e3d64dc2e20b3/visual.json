@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "main dim_location"
+                      "Entity": "main fact_fires"
                     }
                   },
-                  "Property": "state_name"
+                  "Property": "FIRE_SIZE_CLASS"
                 }
               },
-              "queryRef": "main dim_location.state_name",
-              "nativeQueryRef": "state_name",
+              "queryRef": "main fact_fires.FIRE_SIZE_CLASS",
+              "nativeQueryRef": "FIRE_SIZE_CLASS",
               "active": true
             }
           ]
@@ -85,6 +85,13 @@
                   }
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "22D"
+                }
+              }
             }
           }
         }
@@ -114,6 +121,17 @@
               }
             ]
           }
+        },
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            }
+          }
         }
       ],
       "legend": [
@@ -128,6 +146,27 @@
                       "Percent": 0
                     }
                   }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "17D"
+                }
+              }
+            },
+            "showTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "titleText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Clase'"
                 }
               }
             }
@@ -168,6 +207,20 @@
                   }
                 }
               }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Total de Incendios'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "25D"
+                }
+              }
             }
           }
         }
@@ -184,6 +237,13 @@
                       "Percent": 0
                     }
                   }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }

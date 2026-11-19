@@ -1,0 +1,40 @@
+relationship 9e4aae80-bd61-434e-b1e4-5907d473cf3c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'main fact_fires'.DISCOVERY_DATE
+	toColumn: LocalDateTable_ed9187bd-4d16-40fb-a95f-aef0c2118d53.Date
+
+relationship 6d516eee-386e-414c-8f4d-e935e36ab259
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'main fact_fires'.CONT_DATE
+	toColumn: LocalDateTable_0565b8a1-6dc8-45f8-b309-5755ecb7508e.Date
+
+relationship fe2b800a-e461-4506-aab0-1810e1e67fb0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'main dim_date'.full_date
+	toColumn: LocalDateTable_01925203-3238-4bd8-b504-ac48297b6f48.Date
+
+relationship 831ea768-5bd0-4177-8857-09edccdd5c35
+	fromColumn: 'main fact_fires'.dim_cause_id
+	toColumn: 'main dim_cause'.STAT_CAUSE_CODE
+
+	annotation PBI_IsFromSource = FS
+
+relationship 63b072c1-c505-482a-adf8-1339224b406e
+	fromColumn: 'main fact_fires'.cont_date_id
+	toColumn: 'main dim_date'.date_id
+
+	annotation PBI_IsFromSource = FS
+
+relationship c5756fd5-c1aa-4f18-a395-7fff087ce6b5
+	isActive: false
+	fromColumn: 'main fact_fires'.dim_date_id
+	toColumn: 'main dim_date'.date_id
+
+	annotation PBI_IsFromSource = FS
+
+relationship d0c8bf23-5b09-43a3-9bc3-3bbfa74f4c15
+	fromColumn: 'main fact_fires'.dim_location_id
+	toColumn: 'main dim_location'.location_id
+
+	annotation PBI_IsFromSource = FS
+

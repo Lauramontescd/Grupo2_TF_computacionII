@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "384ca308563850c5b433",
+  "position": {
+    "x": 1080.00793003943,
+    "y": 64.962883009890518,
+    "z": 2002,
+    "height": 184.06150186135648,
+    "width": 498.048769742494,
+    "tabOrder": 2002
+  },
+  "visual": {
+    "visualType": "textSlicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "main dim_date"
+                    }
+                  },
+                  "Property": "year"
+                }
+              },
+              "queryRef": "main dim_date.year",
+              "nativeQueryRef": "Suma de year"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

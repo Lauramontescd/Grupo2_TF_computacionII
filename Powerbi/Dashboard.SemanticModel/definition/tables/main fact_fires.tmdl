@@ -1,0 +1,171 @@
+table 'main fact_fires'
+	lineageTag: aa98c816-26ad-4e6d-bcb2-e21f521d28aa
+
+	measure Total_Incendios = COUNTROWS('main fact_fires')
+		formatString: 0
+		lineageTag: b0b44782-bfcb-4602-be6b-08c088f5efce
+
+	measure Total_Acres_Quemados = SUM('main fact_fires'[FIRE_SIZE])
+		lineageTag: 8d4a9872-4b43-4402-a297-4d702bfbd206
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FOD_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: a579a125-2c06-40f1-b4d9-bfa97c954184
+		summarizeBy: count
+		sourceColumn: FOD_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column FPA_ID
+		dataType: string
+		lineageTag: 5b073ebe-d613-4f98-a1ba-bbbe12b0f4f5
+		summarizeBy: none
+		sourceColumn: FPA_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_date_id
+		dataType: string
+		lineageTag: d4a953a5-845a-4356-835d-f83597484c8a
+		summarizeBy: none
+		sourceColumn: dim_date_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column DISCOVERY_DATE
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2fca219f-ddc0-4061-8af2-64a99e5e5190
+		summarizeBy: none
+		sourceColumn: DISCOVERY_DATE
+
+		variation Variation
+			isDefault
+			relationship: 9e4aae80-bd61-434e-b1e4-5907d473cf3c
+			defaultHierarchy: LocalDateTable_ed9187bd-4d16-40fb-a95f-aef0c2118d53.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column dim_location_id
+		dataType: string
+		lineageTag: a8d4a2a7-f6fc-4301-86d3-fcade8a4ef5f
+		summarizeBy: none
+		sourceColumn: dim_location_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column dim_cause_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2f75eef9-829f-48cc-87e1-28f9ddb5bfb7
+		summarizeBy: none
+		sourceColumn: dim_cause_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column FIRE_SIZE
+		dataType: double
+		lineageTag: 281b499c-e1e3-47a7-b08c-a7e51c14dd1d
+		summarizeBy: sum
+		sourceColumn: FIRE_SIZE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FIRE_SIZE_CLASS
+		dataType: string
+		lineageTag: ae1e3475-0bf7-4427-9a32-dfc3df4698e1
+		summarizeBy: none
+		sourceColumn: FIRE_SIZE_CLASS
+
+		annotation SummarizationSetBy = Automatic
+
+	column LATITUDE
+		dataType: double
+		lineageTag: fcc79640-7f5b-4064-b0bc-65b911471ccc
+		summarizeBy: sum
+		sourceColumn: LATITUDE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LONGITUDE
+		dataType: double
+		lineageTag: f289aced-2254-4284-9f3b-dd4e0480ce61
+		summarizeBy: sum
+		sourceColumn: LONGITUDE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DISCOVERY_TIME
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 7a70c328-e14a-412d-8c66-b9f9415dfdb1
+		summarizeBy: none
+		sourceColumn: DISCOVERY_TIME
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column CONT_DATE
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ea8c9b55-9631-43cb-9733-e6c0265d52de
+		summarizeBy: none
+		sourceColumn: CONT_DATE
+
+		variation Variation
+			isDefault
+			relationship: 6d516eee-386e-414c-8f4d-e935e36ab259
+			defaultHierarchy: LocalDateTable_0565b8a1-6dc8-45f8-b309-5755ecb7508e.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column cont_date_id
+		dataType: string
+		lineageTag: d48b82c2-acb1-4a63-b3b6-9bde65222e11
+		summarizeBy: none
+		sourceColumn: cont_date_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column CONT_DOY
+		dataType: int64
+		formatString: 0
+		lineageTag: 149dded5-d71b-4c69-b156-0b31f30da7a7
+		summarizeBy: sum
+		sourceColumn: CONT_DOY
+
+		annotation SummarizationSetBy = Automatic
+
+	column CONT_TIME
+		dataType: string
+		lineageTag: a4f08cbe-76f8-44fa-9df6-2d56659bde4d
+		summarizeBy: none
+		sourceColumn: CONT_TIME
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'main fact_fires' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("pg.us-east-1-aws.motherduck.com", "DENOR_BD_final"),
+				    main_fact_fires = Origen{[Schema="main",Item="fact_fires"]}[Data]
+				in
+				    main_fact_fires
+
+	annotation PBI_ResultType = Table
+

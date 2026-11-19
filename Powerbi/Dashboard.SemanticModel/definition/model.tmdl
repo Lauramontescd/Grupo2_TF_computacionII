@@ -1,0 +1,26 @@
+model Model
+	culture: es-VE
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-VE
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["main fact_fires","main dim_location","main dim_date","main dim_cause"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'main fact_fires'
+ref table DateTableTemplate_3ad87a20-833c-4c35-bf14-2b31544ed28c
+ref table LocalDateTable_ed9187bd-4d16-40fb-a95f-aef0c2118d53
+ref table LocalDateTable_0565b8a1-6dc8-45f8-b309-5755ecb7508e
+ref table 'main dim_location'
+ref table 'main dim_date'
+ref table LocalDateTable_01925203-3238-4bd8-b504-ac48297b6f48
+ref table 'main dim_cause'
+
+ref cultureInfo es-VE
+

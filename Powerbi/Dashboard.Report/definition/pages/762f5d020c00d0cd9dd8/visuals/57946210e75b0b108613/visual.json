@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "57946210e75b0b108613",
+  "position": {
+    "x": 102.85789809899333,
+    "y": 387.07051126726435,
+    "z": 2001,
+    "height": 549.4777187919907,
+    "width": 709.17813952463814,
+    "tabOrder": 2001
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "main dim_cause"
+                    }
+                  },
+                  "Property": "STAT_CAUSE_DESCR"
+                }
+              },
+              "queryRef": "main dim_cause.STAT_CAUSE_DESCR",
+              "nativeQueryRef": "STAT_CAUSE_DESCR",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "main fact_fires"
+                    }
+                  },
+                  "Property": "Total_Incendios"
+                }
+              },
+              "queryRef": "main fact_fires.Total_Incendios",
+              "nativeQueryRef": "Total_Incendios"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "main fact_fires"
+                  }
+                },
+                "Property": "Total_Incendios"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

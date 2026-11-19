@@ -1,0 +1,54 @@
+table 'main dim_location'
+	lineageTag: 1afa0fc8-65b6-44db-8f11-2c40a78ba001
+
+	column location_id
+		dataType: string
+		lineageTag: 7a8482c4-272e-4b33-8648-ade8f52a7ca0
+		summarizeBy: none
+		sourceColumn: location_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column FIPS_CODE
+		dataType: string
+		lineageTag: cfc27c78-9bc0-4885-8ac2-d90dac59b554
+		summarizeBy: none
+		sourceColumn: FIPS_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column STATE
+		dataType: string
+		lineageTag: b1b99bed-e2ec-4a68-be79-7418f45e1025
+		summarizeBy: none
+		sourceColumn: STATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column state_name
+		dataType: string
+		lineageTag: 5156ee58-5141-4146-98bf-7b133f6f62ca
+		summarizeBy: none
+		sourceColumn: state_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column county_name
+		dataType: string
+		lineageTag: ac814239-77ee-40ee-a94b-9922d069d1d5
+		summarizeBy: none
+		sourceColumn: county_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'main dim_location' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("pg.us-east-1-aws.motherduck.com", "DENOR_BD_final"),
+				    main_dim_location = Origen{[Schema="main",Item="dim_location"]}[Data]
+				in
+				    main_dim_location
+
+	annotation PBI_ResultType = Table
+

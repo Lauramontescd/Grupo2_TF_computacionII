@@ -3238,141 +3238,111 @@ cultureInfo es-VE
 			          }
 			        }
 			      ]
+			    },
+			    "main_fact_fire.acumulado_por_clase": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "main fact_fires",
+			          "ConceptualProperty": "% Acumulado por Clase"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% acumulado por clase": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "percentage acumulado por clase": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "pct acumulado por clase": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        }
+			      ]
+			    },
+			    "main_dim_cause.causa_macro": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "main dim_cause",
+			          "ConceptualProperty": "Causa Macro"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "causa macro": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "causa instruction": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.5
+			          }
+			        },
+			        {
+			          "causa shortcut": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.5
+			          }
+			        },
+			        {
+			          "causa command": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "causa function": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "causa short-cut": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        }
+			      ]
 			    }
 			  },
 			  "Relationships": {
-			    "main_dim_date_full_date_me_has_main_dim_date_full_date_día": {
-			      "Binding": {
-			        "ConceptualEntity": "main dim_date"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "main_dim_date.full_date.me": {
-			          "Target": {
-			            "Entity": "main_dim_date.full_date.me"
-			          }
-			        },
-			        "main_dim_date.full_date.día": {
-			          "Target": {
-			            "Entity": "main_dim_date.full_date.día"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "main_dim_date.full_date.me"
-			            },
-			            "Object": {
-			              "Role": "main_dim_date.full_date.día"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "me_have_días"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "main_dim_date.full_date.día"
-			            },
-			            "Object": {
-			              "Role": "main_dim_date.full_date.me"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "días_have_me"
-			        },
-			        {
-			          "Preposition": {
-			            "Subject": {
-			              "Role": "main_dim_date.full_date.día"
-			            },
-			            "Prepositions": [
-			              {
-			                "in": {
-			                  "State": "Generated"
-			                }
-			              }
-			            ],
-			            "Object": {
-			              "Role": "main_dim_date.full_date.me"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "días_are_in_me2"
-			        }
-			      ]
-			    },
-			    "main_dim_date_full_date_trimestre_has_main_dim_date_full_date_me": {
-			      "Binding": {
-			        "ConceptualEntity": "main dim_date"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "main_dim_date.full_date.trimestre": {
-			          "Target": {
-			            "Entity": "main_dim_date.full_date.trimestre"
-			          }
-			        },
-			        "main_dim_date.full_date.me": {
-			          "Target": {
-			            "Entity": "main_dim_date.full_date.me"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "main_dim_date.full_date.trimestre"
-			            },
-			            "Object": {
-			              "Role": "main_dim_date.full_date.me"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "trimestres_have_me"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "main_dim_date.full_date.me"
-			            },
-			            "Object": {
-			              "Role": "main_dim_date.full_date.trimestre"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "me_have_trimestres"
-			        },
-			        {
-			          "Preposition": {
-			            "Subject": {
-			              "Role": "main_dim_date.full_date.me"
-			            },
-			            "Prepositions": [
-			              {
-			                "in": {
-			                  "State": "Generated"
-			                }
-			              }
-			            ],
-			            "Object": {
-			              "Role": "main_dim_date.full_date.trimestre"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "me_are_in_trimestres2"
-			        }
-			      ]
-			    },
 			    "main_dim_date_full_date_año_has_main_dim_date_full_date_trimestre": {
 			      "Binding": {
 			        "ConceptualEntity": "main dim_date"
@@ -3633,7 +3603,7 @@ cultureInfo es-VE
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "me_have_días1"
+			          "ID": "me_have_días"
 			        },
 			        {
 			          "Attribute": {
@@ -3646,7 +3616,7 @@ cultureInfo es-VE
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "días_have_me1"
+			          "ID": "días_have_me"
 			        },
 			        {
 			          "Preposition": {
@@ -3699,7 +3669,7 @@ cultureInfo es-VE
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "trimestres_have_me1"
+			          "ID": "trimestres_have_me"
 			        },
 			        {
 			          "Attribute": {
@@ -3712,7 +3682,7 @@ cultureInfo es-VE
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "me_have_trimestres1"
+			          "ID": "me_have_trimestres"
 			        },
 			        {
 			          "Preposition": {
@@ -3996,7 +3966,7 @@ cultureInfo es-VE
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "me_have_días2"
+			          "ID": "me_have_días1"
 			        },
 			        {
 			          "Attribute": {
@@ -4009,7 +3979,7 @@ cultureInfo es-VE
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "días_have_me2"
+			          "ID": "días_have_me1"
 			        },
 			        {
 			          "Preposition": {
@@ -4062,7 +4032,7 @@ cultureInfo es-VE
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "trimestres_have_me2"
+			          "ID": "trimestres_have_me1"
 			        },
 			        {
 			          "Attribute": {
@@ -4075,7 +4045,7 @@ cultureInfo es-VE
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "me_have_trimestres2"
+			          "ID": "me_have_trimestres1"
 			        },
 			        {
 			          "Preposition": {
@@ -4477,6 +4447,72 @@ cultureInfo es-VE
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "main_dim_causes_have_main_fact_fires"
+			        }
+			      ]
+			    },
+			    "main_dim_cause_has_causa_macro": {
+			      "Binding": {
+			        "ConceptualEntity": "main dim_cause"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "main_dim_cause": {
+			          "Target": {
+			            "Entity": "main_dim_cause"
+			          }
+			        },
+			        "main_dim_cause.causa_macro": {
+			          "Target": {
+			            "Entity": "main_dim_cause.causa_macro"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "main_dim_cause"
+			            },
+			            "Object": {
+			              "Role": "main_dim_cause.causa_macro"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "main_dim_causes_have_causa_macros"
+			        }
+			      ]
+			    },
+			    "main_fact_fire_has_acumulado_por_clase": {
+			      "Binding": {
+			        "ConceptualEntity": "main fact_fires"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "main_fact_fire": {
+			          "Target": {
+			            "Entity": "main_fact_fire"
+			          }
+			        },
+			        "main_fact_fire.acumulado_por_clase": {
+			          "Target": {
+			            "Entity": "main_fact_fire.acumulado_por_clase"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "main_fact_fire"
+			            },
+			            "Object": {
+			              "Role": "main_fact_fire.acumulado_por_clase"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "main_fact_fires_have__acumulado_por_clase"
 			        }
 			      ]
 			    },
@@ -5796,6 +5832,138 @@ cultureInfo es-VE
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "some_main_dim_dates_are_weekend_main_dim_dates"
+			        }
+			      ]
+			    },
+			    "main_dim_date_full_date_trimestre_has_main_dim_date_full_date_me": {
+			      "Binding": {
+			        "ConceptualEntity": "main dim_date"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "main_dim_date.full_date.trimestre": {
+			          "Target": {
+			            "Entity": "main_dim_date.full_date.trimestre"
+			          }
+			        },
+			        "main_dim_date.full_date.me": {
+			          "Target": {
+			            "Entity": "main_dim_date.full_date.me"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "main_dim_date.full_date.trimestre"
+			            },
+			            "Object": {
+			              "Role": "main_dim_date.full_date.me"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "trimestres_have_me2"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "main_dim_date.full_date.me"
+			            },
+			            "Object": {
+			              "Role": "main_dim_date.full_date.trimestre"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "me_have_trimestres2"
+			        },
+			        {
+			          "Preposition": {
+			            "Subject": {
+			              "Role": "main_dim_date.full_date.me"
+			            },
+			            "Prepositions": [
+			              {
+			                "in": {
+			                  "State": "Generated"
+			                }
+			              }
+			            ],
+			            "Object": {
+			              "Role": "main_dim_date.full_date.trimestre"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "me_are_in_trimestres2"
+			        }
+			      ]
+			    },
+			    "main_dim_date_full_date_me_has_main_dim_date_full_date_día": {
+			      "Binding": {
+			        "ConceptualEntity": "main dim_date"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "main_dim_date.full_date.me": {
+			          "Target": {
+			            "Entity": "main_dim_date.full_date.me"
+			          }
+			        },
+			        "main_dim_date.full_date.día": {
+			          "Target": {
+			            "Entity": "main_dim_date.full_date.día"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "main_dim_date.full_date.me"
+			            },
+			            "Object": {
+			              "Role": "main_dim_date.full_date.día"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "me_have_días2"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "main_dim_date.full_date.día"
+			            },
+			            "Object": {
+			              "Role": "main_dim_date.full_date.me"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "días_have_me2"
+			        },
+			        {
+			          "Preposition": {
+			            "Subject": {
+			              "Role": "main_dim_date.full_date.día"
+			            },
+			            "Prepositions": [
+			              {
+			                "in": {
+			                  "State": "Generated"
+			                }
+			              }
+			            ],
+			            "Object": {
+			              "Role": "main_dim_date.full_date.me"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "días_are_in_me2"
 			        }
 			      ]
 			    }

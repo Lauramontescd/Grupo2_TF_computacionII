@@ -18,6 +18,21 @@ table 'main dim_cause'
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Causa Macro' =
+			
+			SWITCH(
+			    TRUE(),
+			    'main dim_cause'[STAT_CAUSE_DESCR] = "Lightning", "Natural",
+			    'main dim_cause'[STAT_CAUSE_DESCR] = "Arson", "Intencionados",
+			    'main dim_cause'[STAT_CAUSE_DESCR] IN {"Powerline", "Equipment Use", "Railroad", "Structure"}, "Accidentes y Fallos",
+			    'main dim_cause'[STAT_CAUSE_DESCR] IN {"Debris Burning", "Campfire", "Smoking", "Fireworks", "Children"}, "Negligencias y Descuidos",
+			    "Otras / No definidas"
+			)
+		lineageTag: c470a8fe-b364-4067-a03a-40be27631d14
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition 'main dim_cause' = m
 		mode: import
 		source =

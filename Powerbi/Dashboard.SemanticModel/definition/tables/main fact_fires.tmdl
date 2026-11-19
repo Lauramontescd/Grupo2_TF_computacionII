@@ -10,6 +10,26 @@ table 'main fact_fires'
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure '% Acumulado por Clase' = ```
+			
+			VAR TotalGeneral = CALCULATE(
+			    [Total_Incendios], 
+			    ALLSELECTED('main fact_fires'[FIRE_SIZE_CLASS])
+			)
+			VAR Acumulado = CALCULATE(
+			    [Total_Incendios],
+			    FILTER(
+			        ALLSELECTED('main fact_fires'[FIRE_SIZE_CLASS]),
+			        'main fact_fires'[FIRE_SIZE_CLASS] <= MAX('main fact_fires'[FIRE_SIZE_CLASS])
+			    )
+			)
+			RETURN
+			    DIVIDE(Acumulado, TotalGeneral, 0)
+			```
+		lineageTag: 2ffe4cd6-474b-4dfc-9171-5a2c6f3aa5ad
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column FOD_ID
 		dataType: int64
 		formatString: 0

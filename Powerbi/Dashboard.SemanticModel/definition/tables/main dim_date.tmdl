@@ -1,6 +1,20 @@
 table 'main dim_date'
 	lineageTag: a08017dc-d317-4605-84e2-bd45e5a14c56
 
+	measure Duracion_Promedio_Horas =
+			
+			AVERAGEX(
+			    'main fact_fires',
+			    VAR FechaInicio = 'main fact_fires'[DISCOVERY_DATE] + TIMEVALUE('main fact_fires'[DISCOVERY_TIME])
+			    VAR FechaFin = 'main fact_fires'[CONT_DATE] + TIMEVALUE('main fact_fires'[CONT_TIME])
+			    VAR DifMinutos = DATEDIFF(FechaInicio, FechaFin, MINUTE)
+			    RETURN
+			        IF(DifMinutos < 0, (DifMinutos + 1440) / 60.0, DifMinutos / 60.0)
+			)
+		lineageTag: 14300864-b82f-49d7-bad6-2c7705197ada
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column date_id
 		dataType: string
 		lineageTag: 257cdd22-83b8-470a-a917-4f83787685af
@@ -57,6 +71,9 @@ table 'main dim_date'
 		lineageTag: 4e94bb7d-1216-4f1a-a4dc-89d842f72281
 		summarizeBy: none
 		sourceColumn: month_name
+		sortByColumn: month
+
+		changedProperty = SortByColumn
 
 		annotation SummarizationSetBy = Automatic
 
@@ -109,9 +126,12 @@ table 'main dim_date'
 		source =
 				let
 				    Origen = PostgreSQL.Database("pg.us-east-1-aws.motherduck.com", "DENOR_BD_final"),
-				    main_dim_date = Origen{[Schema="main",Item="dim_date"]}[Data]
+				    main_dim_date = Origen{[Schema="main",Item="dim_date"]}[Data],
+				    #"Filas filtradas" = Table.SelectRows(main_dim_date, each ([year] <> 2016))
 				in
-				    main_dim_date
+				    #"Filas filtradas"
 
 	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
 

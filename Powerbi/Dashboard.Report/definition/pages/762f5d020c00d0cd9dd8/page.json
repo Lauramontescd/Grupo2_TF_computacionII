@@ -14,23 +14,26 @@
               "name": {
                 "expr": {
                   "Literal": {
-                    "Value": "'fo.png'"
+                    "Value": "''"
                   }
                 }
               },
               "url": {
                 "expr": {
-                  "ResourcePackageItem": {
-                    "PackageName": "RegisteredResources",
-                    "PackageType": 1,
-                    "ItemName": "fo23503176765283207.png"
+                  "Literal": {
+                    "Value": "''"
                   }
                 }
-              },
-              "scaling": {
+              }
+            }
+          },
+          "color": {
+            "solid": {
+              "color": {
                 "expr": {
-                  "Literal": {
-                    "Value": "'Normal'"
+                  "ThemeDataColor": {
+                    "ColorId": 1,
+                    "Percent": 0
                   }
                 }
               }

@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "174feb010b412077bc04",
   "position": {
-    "x": 1105,
-    "y": 485,
+    "x": 625,
+    "y": 540,
     "z": 0,
-    "height": 490,
-    "width": 762.5,
+    "height": 435,
+    "width": 555,
     "tabOrder": 0
   },
   "visual": {
@@ -149,7 +149,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Ubicacion de incendios por clases'"
+                  "Value": "'Ubicación de incendios por clases'"
                 }
               }
             },

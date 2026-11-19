@@ -1,16 +1,16 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "51a53efb0c24d6a9c0a3",
+  "name": "7a146bf5b00827a64e01",
   "position": {
-    "x": 991.66666666666674,
-    "y": 491.66666666666669,
-    "z": 0,
-    "height": 394.44444444444446,
-    "width": 766.66666666666674,
-    "tabOrder": 0
+    "x": 1218,
+    "y": 566,
+    "z": 15000,
+    "height": 366,
+    "width": 664,
+    "tabOrder": 15000
   },
   "visual": {
-    "visualType": "clusteredColumnChart",
+    "visualType": "lineClusteredColumnComboChart",
     "query": {
       "queryState": {
         "Category": {
@@ -23,11 +23,11 @@
                       "Entity": "main dim_date"
                     }
                   },
-                  "Property": "month_name"
+                  "Property": "year"
                 }
               },
-              "queryRef": "main dim_date.month_name",
-              "nativeQueryRef": "month_name",
+              "queryRef": "main dim_date.year",
+              "nativeQueryRef": "year",
               "active": true
             }
           ]
@@ -49,27 +49,112 @@
               "nativeQueryRef": "Total_Incendios"
             }
           ]
+        },
+        "Y2": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "main fact_fires"
+                    }
+                  },
+                  "Property": "Superficie_Promedio"
+                }
+              },
+              "queryRef": "main fact_fires.Superficie_Promedio",
+              "nativeQueryRef": "Superficie_Promedio"
+            }
+          ]
         }
       },
       "sortDefinition": {
         "sort": [
           {
             "field": {
-              "Column": {
+              "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "main dim_date"
+                    "Entity": "main fact_fires"
                   }
                 },
-                "Property": "month_name"
+                "Property": "Total_Incendios"
               }
             },
-            "direction": "Ascending"
+            "direction": "Descending"
           }
-        ]
+        ],
+        "isDefaultSort": true
       }
     },
     "objects": {
+      "lineStyles": [
+        {
+          "properties": {
+            "lineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'solid'"
+                }
+              }
+            },
+            "interpolationSmooth": {
+              "expr": {
+                "Literal": {
+                  "Value": "'cardinal'"
+                }
+              }
+            },
+            "interpolationSmoothParam": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 4,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "main fact_fires.Superficie_Promedio"
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
       "categoryAxis": [
         {
           "properties": {
@@ -88,9 +173,16 @@
           }
         }
       ],
-      "valueAxis": [
+      "legend": [
         {
           "properties": {
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Top'"
+                }
+              }
+            },
             "labelColor": {
               "solid": {
                 "color": {
@@ -102,29 +194,30 @@
                   }
                 }
               }
-            },
-            "gridlineColor": {
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "color": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#E0E0E0'"
+                      "Value": "'#1A1A1A'"
                     }
                   }
-                }
-              }
-            },
-            "showAxisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
                 }
               }
             }
           }
         }
       ],
-      "labels": [
+      "subTitle": [
         {
           "properties": {
             "show": {
@@ -137,28 +230,16 @@
           }
         }
       ],
-      "dataPoint": [
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#10FFC7'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
-    "visualContainerObjects": {
       "title": [
         {
           "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Cant. Incendios y Superficie Promedio por Año'"
+                }
+              }
+            },
             "fontColor": {
               "solid": {
                 "color": {
@@ -166,35 +247,6 @@
                     "ThemeDataColor": {
                       "ColorId": 0,
                       "Percent": 0
-                    }
-                  }
-                }
-              }
-            },
-            "background": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "null"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "background": [
-        {
-          "properties": {
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 1,
-                      "Percent": 0.1
                     }
                   }
                 }

@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "ef98ef55c0e281451b72",
   "position": {
-    "x": 1007.5,
-    "y": 30,
+    "x": 742.5,
+    "y": 17.5,
     "z": 3000,
-    "height": 156,
-    "width": 276,
+    "height": 92.5,
+    "width": 300,
     "tabOrder": 3000
   },
   "visual": {
@@ -112,6 +112,25 @@
           "selector": {
             "metadata": "main fact_fires.Total_Acres_Quemados"
           }
+        },
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
         }
       ],
       "label": [
@@ -128,6 +147,18 @@
               "expr": {
                 "Literal": {
                   "Value": "'belowValue'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
                 }
               }
             }

@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "03f69a09bba5a3138d28",
   "position": {
-    "x": 166.66666666666669,
-    "y": 491.66666666666669,
+    "x": 1000,
+    "y": 512,
     "z": 1000,
     "height": 394,
-    "width": 767,
+    "width": 846,
     "tabOrder": 1000
   },
   "visual": {
@@ -29,6 +29,21 @@
               "queryRef": "main dim_date.year",
               "nativeQueryRef": "year",
               "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "main dim_date"
+                    }
+                  },
+                  "Property": "month_name"
+                }
+              },
+              "queryRef": "main dim_date.month_name",
+              "nativeQueryRef": "month_name",
+              "active": false
             }
           ]
         },
@@ -50,24 +65,6 @@
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "main fact_fires"
-                  }
-                },
-                "Property": "Total_Incendios"
-              }
-            },
-            "direction": "Descending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {

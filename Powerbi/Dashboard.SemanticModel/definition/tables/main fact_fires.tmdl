@@ -30,6 +30,24 @@ table 'main fact_fires'
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure Superficie_Promedio = AVERAGE('main fact_fires'[FIRE_SIZE])
+		lineageTag: 16e5748e-434d-4d38-a47b-759d10f0e347
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Incendios por Clase' =
+			
+			DIVIDE(
+			    [Total_Incendios],
+			    CALCULATE(
+			        [Total_Incendios],
+			        ALLSELECTED('main fact_fires'[FIRE_SIZE_CLASS])
+			    ),
+			    0
+			)
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: c7657346-3071-441c-9e93-4efa6bf925ec
+
 	column FOD_ID
 		dataType: int64
 		formatString: 0

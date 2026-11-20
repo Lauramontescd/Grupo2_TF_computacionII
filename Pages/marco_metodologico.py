@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from pathlib import Path
 
 def render():
 
@@ -60,6 +61,21 @@ def render():
         st.write(
             "Durante el diseño del nuevo esquema, también se realizó una selección de variables. Se descartaron las columnas de la tabla original que no aportaban información relevante para los objetivos del estudio como los identificadores de sistemas de reporte, datos de agencias específicas o nombres de complejos, también se descartó aquellas variables que presentaban una cantidad crítica de valores nulos. Al conservar únicamente las variables de interés (causas, ubicación, temporalidad y magnitud), se construyó un modelo más ligero, enfocado y eficiente para el análisis del estudio."
         )
+        st.subheader("Esquema del modelo Normalizado")
+        img_path = (
+                 Path(__file__).resolve().parent.parent / "assets" / "Normalización TF.png"
+                  )
+        
+        if img_path.exists():
+                        st.image(
+                        str(img_path),
+                        caption=(
+                                 "Diagrama ER de fire_event y tablas (cause, county)"
+                                        ),
+                                      use_container_width=True,
+                                      )
+        else:
+                        st.warning(f"No se encontró la imagen en: {img_path}")
 
         st.markdown("### Limpieza")
         st.write(
@@ -97,11 +113,29 @@ def render():
         st.write(
             "Finalmente se realiza un proceso de poblamiento de tablas, usando de base las tablas normalizadas para llevar los datos a las nuevas tablas creadas."
         )
+        st.subheader("Esquema del modelo Denormalizado")
+        img_path = (
+         Path(__file__).resolve().parent.parent / "assets" / "Denormalización TF.png"
+          )
 
-    with st.container(border=True):
-        st.image("https://images3.memedroid.com/images/UPLOADED947/669b46ef728e7.jpeg", use_container_width=True, caption="Chapu maltratado y sobreexplotado por no sacar la app.py de la carpeta streamlit", width=250)
+        if img_path.exists():
+                st.image(
+                str(img_path),
+                caption=(
+                         "Diagrama ER de fact_fires y dimensiones (dim_date, dim_location,"
+                         " dim_cause)"
+                                ),
+                              use_container_width=True,
+                              )
+        else:
+                st.warning(f"No se encontró la imagen en: {img_path}")
 
-
-
-
-
+        with st.container(border=True):
+            st.image(
+                "https://images3.memedroid.com/images/UPLOADED947/669b46ef728e7.jpeg",
+             caption=(
+                "Chapu maltratado y sobreexplotado por no sacar la app.py de la"
+                " carpeta streamlit"
+             ),
+            use_container_width=True,
+             )

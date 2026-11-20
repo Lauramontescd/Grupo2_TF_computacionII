@@ -121,6 +121,20 @@ table 'main dim_date'
 
 		annotation SummarizationSetBy = Automatic
 
+	column Season =
+			
+			SWITCH(
+			    TRUE(),
+			    'main dim_date'[month] IN {3, 4, 5}, "Spring",
+			    'main dim_date'[month] IN {6, 7, 8}, "Summer",
+			    'main dim_date'[month] IN {9, 10, 11}, "Autumn",
+			    "Winter"
+			)
+		lineageTag: 9e1739aa-9db7-4d57-8981-4482569f1397
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition 'main dim_date' = m
 		mode: import
 		source =

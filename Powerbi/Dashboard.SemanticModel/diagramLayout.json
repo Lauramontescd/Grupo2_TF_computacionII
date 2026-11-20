@@ -11,25 +11,25 @@
         {
           "location": {
             "x": 50,
-            "y": -50
+            "y": 0
           },
           "nodeIndex": "main dim_cause",
           "nodeLineageTag": "5ab09890-8b8f-4d0b-8656-e112143c147f",
           "size": {
-            "height": 128,
+            "height": 210.85714285714283,
             "width": 234
           },
           "zIndex": 0
         },
         {
           "location": {
-            "x": 411.40529261999467,
-            "y": 305.35441781621631
+            "x": 622.83386404856617,
+            "y": 301.068703530502
           },
           "nodeIndex": "main dim_date",
           "nodeLineageTag": "a08017dc-d317-4605-84e2-bd45e5a14c56",
           "size": {
-            "height": 300,
+            "height": 507.14285714285711,
             "width": 234
           },
           "zIndex": 0
@@ -42,7 +42,7 @@
           "nodeIndex": "main dim_location",
           "nodeLineageTag": "1afa0fc8-65b6-44db-8f11-2c40a78ba001",
           "size": {
-            "height": 200,
+            "height": 187.14285714285711,
             "width": 234
           },
           "zIndex": 0
@@ -50,12 +50,12 @@
         {
           "location": {
             "x": 336.50378902918584,
-            "y": -46.235701848563167
+            "y": 0
           },
           "nodeIndex": "main fact_fires",
           "nodeLineageTag": "aa98c816-26ad-4e6d-bcb2-e21f521d28aa",
           "size": {
-            "height": 300,
+            "height": 678.57142857142856,
             "width": 234
           },
           "zIndex": 0

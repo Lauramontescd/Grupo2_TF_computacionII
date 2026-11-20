@@ -4,10 +4,10 @@
   "position": {
     "x": 1054,
     "y": 342,
-    "z": 1,
+    "z": 1000,
     "height": 678,
     "width": 748,
-    "tabOrder": 1
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "barChart",
@@ -223,20 +223,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "178aadd834aa986300ae",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "main fact_fires"
-              }
-            },
-            "Property": "Total_Incendios"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

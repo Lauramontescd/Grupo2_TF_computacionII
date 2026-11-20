@@ -3340,6 +3340,65 @@ cultureInfo es-VE
 			          }
 			        }
 			      ]
+			    },
+			    "main_fact_fire.superficie_promedio": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "main fact_fires",
+			          "ConceptualProperty": "Superficie_Promedio"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "superficie promedio": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "Superficie_Promedio": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        }
+			      ]
+			    },
+			    "main_fact_fire.incendios_por_clase": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "main fact_fires",
+			          "ConceptualProperty": "% Incendios por Clase"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% incendios por clase": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "percentage incendio por clase": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "pct incendio por clase": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        }
+			      ]
 			    }
 			  },
 			  "Relationships": {
@@ -4447,6 +4506,72 @@ cultureInfo es-VE
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "main_dim_causes_have_main_fact_fires"
+			        }
+			      ]
+			    },
+			    "main_fact_fire_has_incendios_por_clase": {
+			      "Binding": {
+			        "ConceptualEntity": "main fact_fires"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "main_fact_fire": {
+			          "Target": {
+			            "Entity": "main_fact_fire"
+			          }
+			        },
+			        "main_fact_fire.incendios_por_clase": {
+			          "Target": {
+			            "Entity": "main_fact_fire.incendios_por_clase"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "main_fact_fire"
+			            },
+			            "Object": {
+			              "Role": "main_fact_fire.incendios_por_clase"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "main_fact_fires_have__incendios_por_clase"
+			        }
+			      ]
+			    },
+			    "main_fact_fire_has_superficie_promedio": {
+			      "Binding": {
+			        "ConceptualEntity": "main fact_fires"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "main_fact_fire": {
+			          "Target": {
+			            "Entity": "main_fact_fire"
+			          }
+			        },
+			        "main_fact_fire.superficie_promedio": {
+			          "Target": {
+			            "Entity": "main_fact_fire.superficie_promedio"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "main_fact_fire"
+			            },
+			            "Object": {
+			              "Role": "main_fact_fire.superficie_promedio"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "main_fact_fires_have_superficie_promedio"
 			        }
 			      ]
 			    },

@@ -130,6 +130,31 @@ def render():
         else:
                 st.warning(f"No se encontró la imagen en: {img_path}")
 
+        st.markdown("### Etapas del procesamiento")
+        st.write(
+            "El tratamiento de la información se organizó en scripts SQL dentro de la carpeta `Base de Datos/`:"
+        )
+
+        fases_procesamiento = [
+            {
+                "Fase": "1. Normalización",
+                "Script": "01_Normalizacion.sql",
+                "Descripción": "Estructuración del modelo relacional (hasta 3FN) a partir de la tabla original, separando en causas, condados y la tabla principal de eventos de incendio",
+            },
+            {
+                "Fase": "2. Limpieza",
+                "Script": "02_Limpieza.sql",
+                "Descripción": "Limpieza y depuración de registros, manejo de valores faltantes en variables temporales y filtro geográfico a California, Texas y Oregón.",
+            },
+            {
+                "Fase": "3. Denormalización",
+                "Script": "03_Denormalizacion.sql",
+                "Descripción": "Estructuración del modelo denormalizado y su diccionario de datos para facilitar su consumo y visualización.",
+            },
+        ]
+        df_fases = pd.DataFrame(fases_procesamiento)
+        st.dataframe(df_fases, hide_index=True, width="stretch")
+
         with st.container(border=True):
             st.image(
                 "https://images3.memedroid.com/images/UPLOADED947/669b46ef728e7.jpeg",
@@ -139,3 +164,5 @@ def render():
              ),
             use_container_width=True,
              )
+
+        

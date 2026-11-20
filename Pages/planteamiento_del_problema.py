@@ -5,7 +5,7 @@ def render():
 
     st.header ("Capítulo 1") 
 
-    opcion_seleccionada = st.selectbox ("SELECCIONAR SECCIÓN", ["PLANTEAMIENTO DEL PROBLEMA", "JUSTIFICACIÓN", "OBJETIVOS DE INVESTIGACIÓN"])
+    opcion_seleccionada = st.selectbox ("SELECCIONAR SECCIÓN", ["PLANTEAMIENTO DEL PROBLEMA", "JUSTIFICACIÓN", "OBJETIVOS DE INVESTIGACIÓN", "LIMITACIONES"])
 
     if opcion_seleccionada == "PLANTEAMIENTO DEL PROBLEMA":
         st.subheader ("PLANTEAMIENTO DEL PROBLEMA")
@@ -37,3 +37,7 @@ def render():
         st.markdown ("3- Cuantificar la variación en la frecuencia anual y/o estacional de los incendios evaluando el alargamiento de la temporada.")
         st.markdown ("4- Analizar la tendencia de la duración promedio en el periodo 1992 y 2015 en los estados de California, Texas y Oregon.")
         st.markdown ("5- Determinar la severidad de los incendios dependiendo de su causa de origen natural o humano.")
+    
+    if opcion_seleccionada == "LIMITACIONES":
+        st.subheader("LIMITACIONES")
+        st.write("La limitación que presentó el estudio estuvo relacionada con la calidad de los registros históricos de incendios en la base de datos analizada. Específicamente una de las variables fundamentales para la respuesta de los objetivos de la investigación como fue la hora de descubrimiento del incendio, la cual era necesaria para realizar una imputación a las variables de fecha y hora de contención, indispensables para los cálculos de estacionalidad y temporalidad de los incendios en los estados de California, Texas y Oregón, presentaba un 47% de valores nulos o faltantes lo cual llevó a tomar la decisión de disponer de dichos registros y reducir así el tamaño de la muestra. Si bien esta depuración redujo el volumen de los datos con los que se trabajó para la investigación, aseguró que el modelado y las conclusiones sobre el comportamiento temporal de los incendios se basaran estrictamente en datos con certeza cronológica.")

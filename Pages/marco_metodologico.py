@@ -74,13 +74,28 @@ def render():
 
         st.markdown("### Denormalización")
         st.write(
-            "Tras finalizar el proceso de limpieza y normalización, se aplicó una estrategia de denormalización con el fin de optimizar el rendimiento en la manipulación de los datos. Esto consistió en consolidar la información clave de las tablas Cause, County y fire_event en un conjunto unificado para dar inicio a la siguiente etapa."
+            "Tras finalizar el proceso de limpieza y normalización, se aplicó una estrategia de denormalización con el fin de optimizar el rendimiento en la manipulación de los datos. Esto consistió en consolidar la información clave de las tablas (`cause`), (`county`) y (`fire_event`) en un conjunto unificado para dar inicio a la siguiente etapa."
                 )
         st.write(
             "El punto de partida de este proceso consistió en la definición formal del nivel de granularidad del modelo de datos. Se estableció que cada registro (fila) de la base de datos representa un evento individual e independiente de incendio forestal. A partir de esta unidad mínima de información, cada entidad queda caracterizada por un conjunto de atributos espacio-temporales y descriptivos clave, tales como la fecha y hora de inicio, la causa confirmada del siniestro, la ubicación geográfica exacta, la superficie afectada y los recursos desplegados para su atención. Esta granularidad atómica asegura la flexibilidad necesaria para realizar análisis detallados y posteriores agregaciones multidimensionales (por región, periodo de tiempo o tipo de causa) sin perder la trazabilidad de los datos originales."
                 )
         st.write(
             "Como siguiente paso en la estructuración del modelo, se procedió a la creación de las tablas de dimensión. Estas tablas tienen como propósito almacenar los atributos descriptivos y cualitativos que otorgan contexto al análisis, permitiendo segmentar y filtrar los registros principales a partir de categorías clave."
+        )
+        st.markdown(
+            "- **DIMENSIÓN: UBICACIÓN (`dim_location`):** Agrupa todos los datos de ubicación geográfica del incendio, como el estado, condado y código FIPS. Para evitar redundancia, se creó una clave primaria única para cada uno de los datos de la tabla."
+        )
+        st.write(
+            "- **DIMENSIÓN: FECHA (`dim_date`):** Agrupa todos los componentes temporales del incendio, (año, mes, día, hora, información de contención, etc). Para crear la clave primaria de esta dimensión, se extrajeron los datos de la columna (`CONT_DATE`) (fecha de contención), juntando año, mes y día como tipo de dato (`TEXT`) para crear una clave primaria única para cada uno de los registros, evitando así los datos duplicados."
+            )
+        st.write(
+            "- **DIMENSIÓN: CAUSA (`dim_cause`):** Agrupa los datos de la causa del incendio junto con su código, siendo este la clave primaria de la tabla."
+        )
+        st.write(
+            "- **TABLA DE HECHOS (`fact_fires`):** Además de su clave primaria (`FOD_ID`), contiene información general de la base de datos, como sus fechas y horas de descubrimiento y contención, tamaño, clase y las claves foráneas hacia cada una de las dimensiones. "
+        )
+        st.write(
+            "Finalmente se realiza un proceso de poblamiento de tablas, usando de base las tablas normalizadas para llevar los datos a las nuevas tablas creadas."
         )
 
         

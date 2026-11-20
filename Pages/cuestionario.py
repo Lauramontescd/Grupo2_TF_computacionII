@@ -366,7 +366,136 @@ ORDER BY cantidad_parejas DESC, estado;"""
             df_p4 = st.session_state.cuestionario_query_result_p4
             st.caption(f"Filas: {len(df_p4)} | Columnas: {len(df_p4.columns)}")
             st.dataframe(df_p4, use_container_width=True, hide_index=True)
-                
+
+    st.subheader("Pregunta 5: Trimestre Crítico de Cada Estado")
+    st.write("La temporada de incendios no es igual en todos los estados, y puede cruzar el fin de año (por ejemplo, de diciembre a febrero).")
+    st.write("Suma los incendios de todos los años por estado y mes de la fecha de descubrimiento. Considera el año como circular: hay doce ventanas posibles de tres meses consecutivos, identificadas por su mes de inicio, y las que empiezan en noviembre y diciembre continúan en enero y febrero. Para cada estado encuentra la ventana con más incendios; si dos empatan, la de menor mes de inicio.")
+    st.write("Incluye solo los estados con incendios en los doce meses y cuyo total de incendios sea mayor o igual que la media de los totales por estado. Muestra el total de incendios del estado, el mes de inicio y el mes de fin de la ventana, los incendios de la ventana, el porcentaje que representan sobre el total del estado, si la ventana cruza el fin de año ('si' o 'no') y el puesto del estado según ese porcentaje, de mayor a menor. Ordena por ese puesto.")
+
+    default_sql_p5 = """WITH ventanas_por_estado AS (
+    SELECT
+        m1.STATE AS estado,
+        totales.total_estado AS total_incendios,
+        m1.mes AS mes_inicio,
+        m3.mes AS mes_fin,
+        (m1.cant + m2.cant + m3.cant) AS suma_3_meses,
+        CASE
+            WHEN m1.mes IN (11, 12) THEN 'si'
+            ELSE 'no'
+        END AS cruza_anio,
+        (m1.cant + m2.cant + m3.cant) * 100.0 / totales.total_estado AS pct_total
+    FROM (
+        SELECT
+            STATE,
+            CAST(strftime(date(DISCOVERY_DATE), '%m') AS INT) AS mes,
+            COUNT(*) AS cant
+        FROM Fires
+        WHERE DISCOVERY_DATE IS NOT NULL
+          AND STATE IS NOT NULL
+        GROUP BY STATE, mes
+    ) m1
+    INNER JOIN (
+        SELECT
+            STATE,
+            CAST(strftime(date(DISCOVERY_DATE), '%m') AS INT) AS mes,
+            COUNT(*) AS cant
+        FROM Fires
+        WHERE DISCOVERY_DATE IS NOT NULL
+          AND STATE IS NOT NULL
+        GROUP BY STATE, mes
+    ) m2
+        ON m1.STATE = m2.STATE
+        AND m2.mes = CASE WHEN m1.mes = 12 THEN 1 ELSE m1.mes + 1 END
+    INNER JOIN (
+        SELECT
+            STATE,
+            CAST(strftime(date(DISCOVERY_DATE), '%m') AS INT) AS mes,
+            COUNT(*) AS cant
+        FROM Fires
+        WHERE DISCOVERY_DATE IS NOT NULL
+          AND STATE IS NOT NULL
+        GROUP BY STATE, mes
+    ) m3
+        ON m1.STATE = m3.STATE
+        AND m3.mes = CASE
+            WHEN m1.mes = 11 THEN 1
+            WHEN m1.mes = 12 THEN 2
+            ELSE m1.mes + 2
+        END
+    INNER JOIN (
+        SELECT
+            STATE,
+            COUNT(*) AS total_estado,
+            COUNT(DISTINCT CAST(strftime(date(DISCOVERY_DATE), '%m') AS INT)) AS meses_activos
+        FROM Fires
+        WHERE DISCOVERY_DATE IS NOT NULL
+          AND STATE IS NOT NULL
+        GROUP BY STATE
+        HAVING meses_activos = 12
+    ) totales
+        ON m1.STATE = totales.STATE
+    WHERE totales.total_estado >= (
+        SELECT AVG(conteo)
+        FROM (
+            SELECT COUNT(*) AS conteo
+            FROM Fires
+            WHERE STATE IS NOT NULL
+            GROUP BY STATE
+        )
+    )
+    QUALIFY ROW_NUMBER() OVER (
+        PARTITION BY m1.STATE
+        ORDER BY (m1.cant + m2.cant + m3.cant) DESC, m1.mes ASC
+    ) = 1
+)
+SELECT
+    RANK() OVER (ORDER BY pct_total DESC) AS "Puesto",
+    estado AS "Estado",
+    total_incendios AS "Total de Incendios",
+    mes_inicio AS "Mes de Inicio",
+    mes_fin AS "Mes de Fin",
+    suma_3_meses AS "Incendios de la Ventana",
+    ROUND(pct_total, 2) AS "Porcentaje sobre el Total (%)",
+    cruza_anio AS "Cruza Fin de Año"
+FROM ventanas_por_estado
+ORDER BY "Puesto" ASC, "Estado" ASC;"""
+
+    sql_query_p5 = st.text_area(
+        "Consulta SQL",
+        value=default_sql_p5,
+        height=340,
+        key="sql_p5",
+    )
+
+    col1, col2 = st.columns([1, 5])
+    with col1:
+        execute_clicked_p5 = st.button("Ejecutar", type="primary", key="btn_exec_p5")
+    with col2:
+        if st.button("Limpiar caché", key="btn_clear_p5"):
+            run_query.clear()
+            st.toast("Caché de consultas limpiada")
+
+    if "cuestionario_query_result_p5" not in st.session_state:
+        st.session_state.cuestionario_query_result_p5 = None
+
+    if execute_clicked_p5:
+        clean_sql_p5 = sql_query_p5.strip()
+        if not clean_sql_p5:
+            st.warning("Escribe una consulta SQL antes de ejecutar.")
+        else:
+            try:
+                sql_ejecutable_p5 = preparar_sql_duckdb(clean_sql_p5)
+                with st.spinner("Ejecutando consulta..."):
+                    st.session_state.cuestionario_query_result_p5 = run_query(sql_ejecutable_p5)
+            except Exception as e:
+                st.error(f"Error en la consulta: {e}")
+
+    if st.session_state.cuestionario_query_result_p5 is not None:
+        df_p5 = st.session_state.cuestionario_query_result_p5
+        st.caption(f"Filas: {len(df_p5)} | Columnas: {len(df_p5.columns)}")
+        st.dataframe(df_p5, use_container_width=True, hide_index=True)
 
     with st.container(border=True):
          st.image("https://i.pinimg.com/736x/f5/52/28/f55228345af8a36e75aa939ac16a0348.jpg", use_container_width=True, caption="Aziel, Juan y Laura con 0 horas de sueño", width=250)
+
+    

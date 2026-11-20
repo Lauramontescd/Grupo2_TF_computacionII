@@ -10,7 +10,7 @@ from data import NOMBRES_ESTADO, cargar_incendios
 @st.cache_resource
 def get_connection() -> duckdb.DuckDBPyConnection:
     token = st.secrets["MOTHERDUCK_TOKEN"]
-    db = st.secrets.get("MOTHERDUCK_DB", "my_db")
+    db = st.secrets.get("MOTHERDUCK_DB", "NOR_BD")
    
     return duckdb.connect(f"md:{db}?motherduck_token={token}")
 

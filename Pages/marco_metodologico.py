@@ -72,6 +72,17 @@ def render():
             "Posteriormente, y en concordancia con los alcances de la investigación, se aplicó un filtro geográfico para conservar únicamente los incendios ocurridos en los estados de California, Texas y Oregón. Tras este proceso de depuración, la muestra final quedó constituida por un total de 167,215 registros válidos."
         )
 
+        st.markdown("### Denormalización")
+        st.write(
+            "Tras finalizar el proceso de limpieza y normalización, se aplicó una estrategia de denormalización con el fin de optimizar el rendimiento en la manipulación de los datos. Esto consistió en consolidar la información clave de las tablas Cause, County y fire_event en un conjunto unificado para dar inicio a la siguiente etapa."
+                )
+        st.write(
+            "El punto de partida de este proceso consistió en la definición formal del nivel de granularidad del modelo de datos. Se estableció que cada registro (fila) de la base de datos representa un evento individual e independiente de incendio forestal. A partir de esta unidad mínima de información, cada entidad queda caracterizada por un conjunto de atributos espacio-temporales y descriptivos clave, tales como la fecha y hora de inicio, la causa confirmada del siniestro, la ubicación geográfica exacta, la superficie afectada y los recursos desplegados para su atención. Esta granularidad atómica asegura la flexibilidad necesaria para realizar análisis detallados y posteriores agregaciones multidimensionales (por región, periodo de tiempo o tipo de causa) sin perder la trazabilidad de los datos originales."
+                )
+        st.write(
+            "Como siguiente paso en la estructuración del modelo, se procedió a la creación de las tablas de dimensión. Estas tablas tienen como propósito almacenar los atributos descriptivos y cualitativos que otorgan contexto al análisis, permitiendo segmentar y filtrar los registros principales a partir de categorías clave."
+        )
+
         
 
 

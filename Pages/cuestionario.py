@@ -261,8 +261,93 @@ ORDER BY c.FIRE_SIZE_CLASS ASC;
                 with st.spinner("Ejecutando consulta..."):
                     st.session_state.cuestionario_query_result = run_query(sql_ejecutable)
             except Exception as e:
-                st.error(f"Error en la consulta: {e}") 
+                st.error(f"Error en la consulta: {e}")
+                
+    st.subheader("Pregunta 4: Megaincendios simultáneos")
+    st.write("Un megaincendio es un incendio de la clase de tamaño más alta (clase G, de 5.000 acres o más). Cuando varios se declaran casi a la vez en un mismo estado, los recursos de extinción se saturan.")
+    st.write("Forma todas las parejas de megaincendios distintos del mismo estado cuyas fechas de descubrimiento difieran en tres días o menos. Cada pareja debe contarse una sola vez: el primer incendio es el descubierto antes y, si ambos se descubrieron el mismo día, el de menor identificador.")
+    st.write("Para cada estado muestra la cantidad de parejas, la cantidad de megaincendios que tiene y los datos de la pareja de mayor superficie conjunta: nombre, fecha de descubrimiento y superficie de cada incendio, días entre ambos y superficie conjunta. Si un incendio no tiene nombre, indícalo con el texto '(sin nombre)'. Muestra los diez estados con más parejas, de mayor a menor.")
 
+    WITH megaincendios AS (
+
+    SELECT
+        FOD_ID,
+        STATE                                                     AS estado,
+        COALESCE(NULLIF(TRIM(FIRE_NAME), ''), '(sin nombre)')     AS nombre,
+        date(DISCOVERY_DATE)                                      AS fecha_descubrimiento,
+        CAST(julianday(date(DISCOVERY_DATE)) + 0.5 AS INTEGER)    AS dia_juliano,
+        FIRE_SIZE                                                 AS superficie,
+        COUNT(*) OVER (PARTITION BY STATE)                        AS cantidad_megaincendios
+    FROM Fires
+    WHERE FIRE_SIZE_CLASS = 'G'
+),
+parejas AS (
+
+    SELECT
+        a.estado,
+        a.cantidad_megaincendios,
+        a.FOD_ID                            AS id_a,
+        b.FOD_ID                            AS id_b,
+        a.nombre                            AS nombre_a,
+        a.fecha_descubrimiento              AS fecha_a,
+        a.superficie                        AS superficie_a,
+        b.nombre                            AS nombre_b,
+        b.fecha_descubrimiento              AS fecha_b,
+        b.superficie                        AS superficie_b,
+        b.dia_juliano - a.dia_juliano       AS dias_entre_ambos,
+        a.superficie + b.superficie         AS superficie_conjunta
+    FROM megaincendios AS a
+    JOIN megaincendios AS b
+      ON  b.estado = a.estado
+      AND b.dia_juliano BETWEEN a.dia_juliano AND a.dia_juliano + 3
+      AND (b.dia_juliano > a.dia_juliano OR b.FOD_ID > a.FOD_ID)
+),
+ranking AS (
+
+    SELECT
+        parejas.*,
+        COUNT(*)     OVER (PARTITION BY estado)                                  AS cantidad_parejas,
+        ROW_NUMBER() OVER (PARTITION BY estado
+                           ORDER BY superficie_conjunta DESC, id_a, id_b)        AS posicion
+    FROM parejas
+)
+SELECT
+    estado                    AS "Estado",
+    cantidad_parejas          AS "Cantidad de parejas",
+    cantidad_megaincendios    AS "Cantidad de megaincendios",
+    nombre_a                  AS "Nombre del primer incendio",
+    fecha_a                   AS "Fecha de descubrimiento del primero",
+    superficie_a              AS "Superficie del primero (acres)",
+    nombre_b                  AS "Nombre del segundo incendio",
+    fecha_b                   AS "Fecha de descubrimiento del segundo",
+    superficie_b              AS "Superficie del segundo (acres)",
+    dias_entre_ambos          AS "Días entre ambos",
+    superficie_conjunta       AS "Superficie conjunta (acres)"
+FROM ranking
+WHERE posicion = 1
+  AND estado IN (
+        SELECT estado
+        FROM ranking
+        WHERE posicion = 1
+        ORDER BY cantidad_parejas DESC, estado
+        LIMIT 10)
+ORDER BY cantidad_parejas DESC, estado;
+
+   if "cuestionario_query_result" not in st.session_state:
+        st.session_state.cuestionario_query_result = None
+
+    if execute_clicked:
+        clean_sql = sql_query.strip()
+        if not clean_sql:
+            st.warning("Escribe una consulta SQL antes de ejecutar.")
+        else:
+            try:
+                sql_ejecutable = preparar_sql_duckdb(clean_sql)
+                with st.spinner("Ejecutando consulta..."):
+                    st.session_state.cuestionario_query_result = run_query(sql_ejecutable)
+            except Exception as e:
+                st.error(f"Error en la consulta: {e}")
+    
     if st.session_state.cuestionario_query_result is not None:
         df = st.session_state.cuestionario_query_result
         st.caption(f"Filas: {len(df)} | Columnas: {len(df.columns)}")

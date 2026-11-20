@@ -80,21 +80,28 @@ erDiagram
 ## Estructura del repositorio
 
 ```text
+├── app.py                              Aplicación principal en Streamlit
+├── data.py                             Conexión y extracción de datos 
+├── indicators.py                       Métricas
+├── requirements.txt                    Dependencias del proyecto
+├── Evaluacion_SQL_Formulario_G2.docx   Cuestionario de evaluación SQL
+│
+├── .streamlit/                         Configuración y credenciales de la app
+│
 ├── Base de Datos/
-│   ├── 01_Normalizacion.sql         # Script de diseño y tablas normalizadas
-│   ├── 02_Limpieza.sql              # Script de limpieza y depuración de datos
-│   ├── 03_Denormalizacion.sql       # Script de denormalización 
-│   ├── DICCIONARIO_DE_DATOS.md      # Diccionario de campos, tipos de datos y descripciones
-│   └── MODELADO_DE_DATOS.md         # Documentación de la arquitectura y modelo 3FN
+│   ├── 01_Normalizacion.sql            Script del Esquema relacional y tablas (3FN)
+│   ├── 02_Limpieza.sql                 Script de limpieza de datos
+│   ├── 03_Denormalizacion.sql          Script de denormalización
+│   ├── DICCIONARIO_DE_DATOS.md         Diccionario de campos
+│   └── MODELADO_DE_DATOS.md            Documentación de la arquitectura y modelo 3FN
 │
-├── streamlit_app/                   # Aplicación interactiva en Streamlit
-│   ├── Pages/                       # Secciones y vistas secundarias del dashboard
-│   ├── assets/                      # Recursos gráficos e imágenes
-│   ├── app.py                       # Código principal de la app
-│   └── requirements.txt             # Dependencias del proyecto
-│
-└── README.md                        # Presentación principal del repositorio 
+├── Pages/                              Vistas y secciones del tablero
+├── Powerbi/                            Dashboard, medidas y modelado BI
+└── assets/                             Recursos gráficos y banner
 ```
+
+
+
 
 ## Fuente de Datos 
 **1.88 Million US Wildfires** · Licencia **CC0 (Dominio público)** · Dataset  [Kaggle](https://www.kaggle.com/datasets/rtatman/188-million-us-wildfires)

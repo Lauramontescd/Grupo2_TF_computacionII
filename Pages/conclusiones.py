@@ -93,7 +93,7 @@ def _resumen_por_estado(estado: str) -> None:
 
 
 def render() -> None:
-    st.header("Conclusiones")
+    st.header("CONCLUSIONES")
 
     st.subheader("Hallazgos por objetivo")
     st.markdown(

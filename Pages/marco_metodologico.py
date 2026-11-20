@@ -5,7 +5,7 @@ from pathlib import Path
 def render():
 
 
-    st.header ("Capítulo 3 (Marco Metodológico)")
+    st.header ("MARCO METODOLÓGICO")
 
     opcion_seleccionada = st.selectbox ("SELECCIONAR SECCIÓN", ["TIPO Y NIVEL DE LA INVESTIGACIÓN", "POBLACIÓN Y UNIDAD DE ANÁLISIS", "OPERACIONALIZACIÓN DE VARIABLES","PROCESAMIENTO DE LOS DATOS"])
 

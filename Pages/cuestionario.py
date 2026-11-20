@@ -29,7 +29,7 @@ def preparar_sql_duckdb(sql: str) -> str:
 
 
 def render() -> None:
-    st.title("Cuestionario de análisis de incendios forestales")
+    st.title("CUESTIONARIO DE ANALISIS DE DATOS")
 
     st.subheader("Pregunta 3: Causas de Fin de Semana")
     st.write("Algunas causas de incendio están ligadas al ocio y deberían concentrarse en sábados y domingos. Se quiere comprobar con la fecha de descubrimiento.")

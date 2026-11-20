@@ -88,7 +88,6 @@ def _objetivo2(df: pd.DataFrame, estado: str) -> None:
                "La distribución tiene cola larga, por eso se reporta también el percentil 90.")
     st.dataframe(d.round(2))
 
-    st.markdown("### Análisis de resultados")
 
     Analisis_objetivo2 = {
         "CA": "Entre 1992 y 2015, los incendios registrados en California tuvieron una duración media de 1,05 días, y solo el 5,2 % logró extenderse por más de una jornada. Al observar la evolución anual del promedio, se evidencia una aumento leve, sin tendencia lineal clara respecto a los 1990’s (donde el promedio rondaba los 0,5 días), pasando a estabilizarse cerca de 1,0 día a partir del año 2000. Además, destacan dos picos atípicos muy marcados en 1999 (alrededor de 3,6 días) y 2008 (cerca de 4,4 días), 1999 es un efecto de 4 valores extremos y 2008 un año de incendios largos y difíciles de contener.",
@@ -142,7 +141,7 @@ def _objetivo4(df: pd.DataFrame, estado: str) -> None:
                 "Por eso se usan percentiles y totales, no solo el promedio.")
      st.dataframe(m.round(2))
 
-     st.markdown("### Análisis de resultados")
+     st.header("ANÁLISIS DE RESULTADOS")
           
      Analisis_objetivo4 = {
          
@@ -167,7 +166,7 @@ def _objetivo5(df: pd.DataFrame, estado: str) -> None:
     st.markdown("*Superficie quemada por año según el origen (acres)*")
     st.line_chart(ind.superficie_anual_por_grupo(df, estado))
 
-    st.markdown("### Análisis de resultados")
+    st.header("ANÁLISIS DE RESULTADOS")
          
     Analisis_objetivo5 = {
              
@@ -181,7 +180,7 @@ def _objetivo5(df: pd.DataFrame, estado: str) -> None:
     
 
 def render() -> None:
-    st.header("Análisis de resultados")
+    st.header("ANÁLISIS DE RESULTADOS")
     df = cargar_incendios()
     estado = st.radio("Estado", list(NOMBRES_ESTADO), format_func=NOMBRES_ESTADO.get, horizontal=True)
     n = int((df["estado"] == estado).sum())

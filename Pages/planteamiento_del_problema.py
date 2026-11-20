@@ -3,7 +3,7 @@ import streamlit as st
 def render():
 
 
-    st.header ("Capítulo 1") 
+    st.header ("PLANTEAMIENTO DEL PROBLEMA") 
 
     opcion_seleccionada = st.selectbox ("SELECCIONAR SECCIÓN", ["PLANTEAMIENTO DEL PROBLEMA", "JUSTIFICACIÓN", "OBJETIVOS DE INVESTIGACIÓN", "LIMITACIONES"])
 
@@ -18,7 +18,7 @@ def render():
         st.markdown ("5- ¿Cuál es la severidad de los incendios dependiendo de su causa de origen?")
 
     if opcion_seleccionada == "JUSTIFICACIÓN":
-        st.subheader ("Justificación")
+        st.subheader ("JUSTIFICACIÓN")
         st.write ("Los incendios forestales constituyen uno de los fenómenos de mayor impacto ambiental, económico y social en Estados Unidos. Cada año, millones de acres son afectados, con consecuencias que van desde la pérdida de biodiversidad y degradación del suelo. Esta investigación analiza  la evolución de dichos incendios entre el periodo de 1992 y 2015 el cual  ofrece una ventana de 24 años que permite observar cambios significativos en el comportamiento de los incendios en los estados de California, Texas y Oregón, tres estados seleccionados por criterios de representatividad geográfica, volumen de datos  y contraste en sus condiciones climáticas y de vegetación. A través de un enfoque descriptivo la investigación no busca comparar los estados entre sí, sino identificar tendencias temporales de cada uno, aportando evidencia que contribuya a la compresión del comportamiento histórico del fuego al ofrecer un panorama claro de cómo ha evolucionado el riesgo en cada región estudiada.")
 
 

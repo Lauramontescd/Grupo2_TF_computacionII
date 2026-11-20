@@ -3,7 +3,7 @@ import streamlit as st
 def render():
 
 
-    st.header ("Capítulo 2 (Marco Teórico)") 
+    st.header ("MARCO TEÓRICO") 
 
     opcion_seleccionada = st.selectbox ("SELECCIONAR SECCIÓN", ["ANTECEDENTES", "BASES TEÓRICAS", "MÉTODOS ESTADÍSTICOS"])
 

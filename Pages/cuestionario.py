@@ -30,6 +30,104 @@ def preparar_sql_duckdb(sql: str) -> str:
 
 def render() -> None:
     st.title("CUESTIONARIO DE ANALISIS DE DATOS")
+    st.subheader("Pregunta 1: Variación de la Superficie Quemada en el Último Año")
+    st.write(
+        "Se quiere saber en qué estados creció más la superficie quemada en el último año "
+        "de la base respecto del año anterior. Calcula por estado y año (FIRE_YEAR) la cantidad "
+        "de incendios y la superficie quemada de los dos últimos años disponibles, sin escribir "
+        "esos años en la consulta. Obtén ambos años en una misma fila cruzando ese resultado "
+        "consigo mismo y calcula la variación porcentual de la superficie. Solo participan los "
+        "estados con datos en los dos años."
+    )
+    st.write(
+        "Muestra los estados cuya superficie del último año sea mayor o igual que la media de "
+        "ese valor entre los estados participantes. Para cada uno indica su puesto según la "
+        "variación (de mayor a menor), los incendios del último año, la superficie del año anterior, "
+        "la del último año, la variación porcentual y el porcentaje que representa su superficie "
+        "del último año sobre la de todos los estados participantes. Ordena por puesto."
+    )
+
+    default_sql_p1 = """
+WITH resumen_anual AS (
+    SELECT 
+        STATE,
+        FIRE_YEAR,
+        COUNT(*) AS total_incendios,
+        SUM(FIRE_SIZE) AS area_quemada
+    FROM Fires
+    WHERE FIRE_YEAR IN (
+        SELECT DISTINCT FIRE_YEAR 
+        FROM Fires 
+        ORDER BY FIRE_YEAR DESC 
+        LIMIT 2
+    )
+    GROUP BY STATE, FIRE_YEAR
+),
+metricas_comparadas AS (
+    SELECT 
+        act.STATE AS estado,
+        act.total_incendios AS incendios_ultimo_anio,
+        ant.area_quemada AS sup_anterior,
+        act.area_quemada AS sup_actual,
+        ((act.area_quemada - ant.area_quemada) / ant.area_quemada) * 100.0 AS cambio_pct,
+        RANK() OVER (
+            ORDER BY ((act.area_quemada - ant.area_quemada) / ant.area_quemada) DESC
+        ) AS ranking,
+        AVG(act.area_quemada) OVER () AS promedio_nacional,
+        (act.area_quemada / SUM(act.area_quemada) OVER ()) * 100.0 AS aporte_total_pct
+    FROM resumen_anual act
+    INNER JOIN resumen_anual ant 
+        ON act.STATE = ant.STATE 
+        AND act.FIRE_YEAR = ant.FIRE_YEAR + 1
+)
+SELECT 
+    ranking AS Puesto,
+    estado AS Estado,
+    incendios_ultimo_anio AS Incendios_Ultimo_Anio,
+    ROUND(sup_anterior, 2) AS Superficie_Anio_Anterior,
+    ROUND(sup_actual, 2) AS Superficie_Ultimo_Anio,
+    ROUND(cambio_pct, 2) AS Variacion_Porcentual,
+    ROUND(aporte_total_pct, 2) AS Porcentaje_Sobre_Total
+FROM metricas_comparadas
+WHERE sup_actual >= promedio_nacional
+ORDER BY ranking ASC;
+"""
+
+
+    sql_query_p1 = st.text_area(
+        "Consulta SQL",
+        value=default_sql_p1,
+        height=340,
+        key="sql_p1",
+    )
+
+    col1, col2 = st.columns([1, 5])
+    with col1:
+        execute_clicked_p1 = st.button("Ejecutar", type="primary", key="btn_exec_p1")
+    with col2:
+        if st.button("Limpiar caché", key="btn_clear_p1"):
+            run_query.clear()
+            st.toast("Caché de consultas limpiada")
+
+    if "cuestionario_query_result_p1" not in st.session_state:
+        st.session_state.cuestionario_query_result_p1 = None
+
+    if execute_clicked_p1:
+        clean_sql_p1 = sql_query_p1.strip()
+        if not clean_sql_p1:
+            st.warning("Escribe una consulta SQL antes de ejecutar.")
+        else:
+            try:
+                sql_ejecutable_p1 = preparar_sql_duckdb(clean_sql_p1)
+                with st.spinner("Ejecutando consulta..."):
+                    st.session_state.cuestionario_query_result_p1 = run_query(sql_ejecutable_p1)
+            except Exception as e:
+                st.error(f"Error en la consulta: {e}")
+
+    if st.session_state.cuestionario_query_result_p1 is not None:
+        df_p1 = st.session_state.cuestionario_query_result_p1
+        st.caption(f"Filas: {len(df_p1)} | Columnas: {len(df_p1.columns)}")
+        st.dataframe(df_p1, width="stretch", hide_index=True)
 
     st.subheader("Pregunta 2: Pirámide de Clases de Tamaño")
     st.write("Los incendios se clasifican por tamaño en siete clases, de la A (los más pequeños) a la G (los más grandes). Se quiere ver cómo se reparten los incendios y la superficie entre ellas.")

@@ -23,7 +23,7 @@
                       "Entity": "main dim_cause"
                     }
                   },
-                  "Property": "Causa Macro"
+                  "Property": "Macro Cause"
                 }
               },
               "queryRef": "main dim_cause.Causa Macro",

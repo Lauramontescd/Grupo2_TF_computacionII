@@ -48,6 +48,9 @@ table 'main fact_fires'
 		formatString: 0.00\ %;-0.00\ %;0.00\ %
 		lineageTag: c7657346-3071-441c-9e93-4efa6bf925ec
 
+	measure 'Tarjeta Severidad'
+		lineageTag: a69d3b4c-f474-47ba-94e4-85bedba54a17
+
 	column FOD_ID
 		dataType: int64
 		formatString: 0
@@ -193,6 +196,20 @@ table 'main fact_fires'
 		lineageTag: a4f08cbe-76f8-44fa-9df6-2d56659bde4d
 		summarizeBy: none
 		sourceColumn: CONT_TIME
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Severity Level' =
+			
+			SWITCH(
+			    TRUE(),
+			    'main fact_fires'[FIRE_SIZE_CLASS] IN {"A", "B"}, "Low",
+			    'main fact_fires'[FIRE_SIZE_CLASS] IN {"C", "D"}, "Average",
+			    'main fact_fires'[FIRE_SIZE_CLASS] IN {"E", "F"}, "High",
+			    "Very High"
+			)
+		lineageTag: 3a6ec961-b4f3-4334-9fb2-72bdaf1c347e
+		summarizeBy: none
 
 		annotation SummarizationSetBy = Automatic
 

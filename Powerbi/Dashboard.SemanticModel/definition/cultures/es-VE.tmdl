@@ -3279,7 +3279,7 @@ cultureInfo es-VE
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "main dim_cause",
-			          "ConceptualProperty": "Causa Macro"
+			          "ConceptualProperty": "Macro Cause"
 			        }
 			      },
 			      "State": "Generated",

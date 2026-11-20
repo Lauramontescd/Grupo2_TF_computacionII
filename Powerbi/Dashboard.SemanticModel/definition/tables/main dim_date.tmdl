@@ -15,6 +15,16 @@ table 'main dim_date'
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Duracion Media Dias' =
+			
+			AVERAGEX(
+			    'main fact_fires',
+			    DATEDIFF('main fact_fires'[DISCOVERY_DATE], 'main fact_fires'[CONT_DATE], DAY)
+			)
+		lineageTag: 0bd99802-d288-408f-9b76-ebf6bde01746
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column date_id
 		dataType: string
 		lineageTag: 257cdd22-83b8-470a-a917-4f83787685af

@@ -31,6 +31,67 @@ def preparar_sql_duckdb(sql: str) -> str:
 def render() -> None:
     st.title("CUESTIONARIO DE ANALISIS DE DATOS")
 
+    st.subheader("Pregunta 2: Pirámide de Clases de Tamaño")
+    st.write("Los incendios se clasifican por tamaño en siete clases, de la A (los más pequeños) a la G (los más grandes). Se quiere ver cómo se reparten los incendios y la superficie entre ellas.")
+    st.write("Para cada clase calcula la cantidad de incendios y la superficie quemada. Calcula también el porcentaje acumulado de incendios desde la clase más pequeña hasta esa clase, y el porcentaje de la superficie total que corresponde a esa clase y a todas las mayores; ambos porcentajes se calculan sobre el total de la base.")
+    st.write("Agrega en cada fila la clase inmediatamente superior, obtenida cruzando el resultado consigo mismo, y cuántos incendios hay de la clase por cada incendio de la clase superior. La última clase debe aparecer con esos dos valores vacíos. Ordena por clase.")
+
+    sql_p2 = st.text_area(
+        "Consulta SQL - Pregunta 2",
+        value="""WITH ResumenClases AS (
+    SELECT 
+        FIRE_SIZE_CLASS,
+        COUNT(*) AS Cantidad_Incendios,
+        SUM(FIRE_SIZE) AS Superficie_Quemada
+    FROM Fires
+    WHERE FIRE_SIZE_CLASS IS NOT NULL
+    GROUP BY FIRE_SIZE_CLASS
+),
+Calculos AS (
+    SELECT 
+        FIRE_SIZE_CLASS,
+        Cantidad_Incendios,
+        Superficie_Quemada,
+        CASE FIRE_SIZE_CLASS 
+            WHEN 'A' THEN 1 WHEN 'B' THEN 2 WHEN 'C' THEN 3 WHEN 'D' THEN 4 
+            WHEN 'E' THEN 5 WHEN 'F' THEN 6 WHEN 'G' THEN 7 
+        END AS Orden,
+        (Cantidad_Incendios * 100.0) / SUM(Cantidad_Incendios) OVER () AS Porcentaje_Incendios,
+        (SUM(Cantidad_Incendios) OVER (ORDER BY FIRE_SIZE_CLASS ASC) * 100.0) / SUM(Cantidad_Incendios) OVER () AS Porcentaje_Acumulado_Incendios,
+        (SUM(Superficie_Quemada) OVER (ORDER BY FIRE_SIZE_CLASS DESC) * 100.0) / SUM(Superficie_Quemada) OVER () AS Porcentaje_Superficie_Mayores
+    FROM ResumenClases
+)
+SELECT 
+    c.FIRE_SIZE_CLASS AS "Clase de Tamaño",
+    c.Cantidad_Incendios AS "Cantidad de Incendios",
+    ROUND(c.Porcentaje_Incendios, 2) AS "Porcentaje Incendios",
+    ROUND(c.Porcentaje_Acumulado_Incendios, 2)  AS "Porcentaje Acumulado",
+    ROUND(c.Porcentaje_Superficie_Mayores, 2)  AS "Porcentaje Superficie (Mayores)",
+    c2.FIRE_SIZE_CLASS AS "Clase Superior",
+    c2.Cantidad_Incendios AS "Incendios Clase Superior"
+FROM Calculos c
+LEFT JOIN Calculos c2 ON c2.Orden = c.Orden + 1
+ORDER BY c.FIRE_SIZE_CLASS ASC;
+""",
+        height=320,
+        key="sql_p2",
+    )
+
+    if st.button("Ejecutar", type="primary", key="btn_p2"):
+        if not sql_p2.strip():
+            st.warning("Escribe una consulta SQL antes de ejecutar.")
+        else:
+            try:
+                sql_ejecutable_p2 = preparar_sql_duckdb(sql_p2.strip())
+                with st.spinner("Ejecutando consulta..."):
+                    df_p2 = run_query(sql_ejecutable_p2)
+                st.caption(f"Filas: {len(df_p2)} | Columnas: {len(df_p2.columns)}")
+                st.dataframe(df_p2, use_container_width=True)
+            except Exception as e:
+                st.error(f"Error en la consulta: {e}")
+
+    st.divider()
+
     st.subheader("Pregunta 3: Causas de Fin de Semana")
     st.write("Algunas causas de incendio están ligadas al ocio y deberían concentrarse en sábados y domingos. Se quiere comprobar con la fecha de descubrimiento.")
     st.write("Cuenta los incendios por causa y tipo de día (fin de semana o laborable) y obtén ambos tipos en  una misma fila cruzando ese resultado consigo mismo. Como hay cinco días laborables y dos de fin de semana, la comparación se hace con la razón diaria: incendios de fin de semana divididos entre dos, sobre incendios laborables divididos entre cinco.")
@@ -102,7 +163,7 @@ def render() -> None:
                 with st.spinner("Ejecutando consulta..."):
                     st.session_state.cuestionario_query_result = run_query(sql_ejecutable)
             except Exception as e:
-                st.error(f"Error en la consulta: {e}")
+                st.error(f"Error en la consulta: {e}") 
 
     if st.session_state.cuestionario_query_result is not None:
         df = st.session_state.cuestionario_query_result

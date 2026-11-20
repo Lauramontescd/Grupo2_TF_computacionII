@@ -72,5 +72,3 @@ if secciones[seleccion] is None:
 else:
     secciones[seleccion]()
 
-with st.container(border=True):
-     st.image("https://content.imageresizer.com/images/memes/elmo-fire-meme-29s5ao.jpg", use_container_width=True, caption="Jesus corrigiendo", width=250)

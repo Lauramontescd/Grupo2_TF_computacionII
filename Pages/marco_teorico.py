@@ -118,7 +118,8 @@ def render():
         st.markdown ("d- Coeficiente de Variación de Pearson: Es el cociente entre la desviación estándar y la media aritmética, multiplicado por cien. Es el coeficiente de dispersión relativa de más amplio uso.")
         st.latex(r"CV = \frac{s}{\bar{x}} \cdot 100")
 
-
+    with st.container(border=True):
+        st.image("https://ichef.bbci.co.uk/ace/ws/640/cpsprodpb/F1F2/production/_118283916_b19c5a1f-162b-410b-8169-f58f0d153752.jpg.webp", use_container_width=True, caption="Aziel después de raspar", width=250)
 
 
 

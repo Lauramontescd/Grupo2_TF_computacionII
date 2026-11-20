@@ -199,4 +199,5 @@ def render() -> None:
     with t5:
         _objetivo5(df, estado)
 
-    
+    with st.container(border=True):
+        st.image("https://content.imageresizer.com/images/memes/House-On-Fire-meme-7.jpg", use_container_width=True, caption="La casa de Oliver misteriosamente después de las 6:00PM", width=250)

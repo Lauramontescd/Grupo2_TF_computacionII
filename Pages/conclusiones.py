@@ -13,3 +13,5 @@ def render():
     st.dataframe(resumen.round(2))
     st.caption("Redacta aquí las conclusiones de cada objetivo con estas cifras y las de la sección Análisis.")
 
+    with st.container(border=True):
+        st.image("https://i.pinimg.com/236x/1a/18/89/1a188994454f7da73f229f775cf8801a.jpg", use_container_width=True, caption="Como se sintieron los parciales del semestre", width=250)

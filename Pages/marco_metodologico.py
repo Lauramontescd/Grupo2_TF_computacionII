@@ -98,7 +98,8 @@ def render():
             "Finalmente se realiza un proceso de poblamiento de tablas, usando de base las tablas normalizadas para llevar los datos a las nuevas tablas creadas."
         )
 
-        
+    with st.container(border=True):
+        st.image("https://images3.memedroid.com/images/UPLOADED947/669b46ef728e7.jpeg", use_container_width=True, caption="Chapu maltratado y sobreexplotado por no sacar la app.py de la carpeta streamlit", width=250)
 
 
 

@@ -41,3 +41,6 @@ def render():
     if opcion_seleccionada == "LIMITACIONES":
         st.subheader("LIMITACIONES")
         st.write("La limitación que presentó el estudio estuvo relacionada con la calidad de los registros históricos de incendios en la base de datos analizada. Específicamente una de las variables fundamentales para la respuesta de los objetivos de la investigación como fue la hora de descubrimiento del incendio, la cual era necesaria para realizar una imputación a las variables de fecha y hora de contención, indispensables para los cálculos de estacionalidad y temporalidad de los incendios en los estados de California, Texas y Oregón, presentaba un 47% de valores nulos o faltantes lo cual llevó a tomar la decisión de disponer de dichos registros y reducir así el tamaño de la muestra. Si bien esta depuración redujo el volumen de los datos con los que se trabajó para la investigación, aseguró que el modelado y las conclusiones sobre el comportamiento temporal de los incendios se basaran estrictamente en datos con certeza cronológica.")
+
+    with st.container(border=True):
+        st.image("https://content.imageresizer.com/images/memes/elmo-fire-meme-29s5ao.jpg", use_container_width=True, caption="Jesus corrigiendo", width=250)

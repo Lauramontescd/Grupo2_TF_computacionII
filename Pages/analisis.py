@@ -156,8 +156,6 @@ def _objetivo4(df: pd.DataFrame, estado: str) -> None:
 
 def _objetivo5(df: pd.DataFrame, estado: str) -> None:
     st.subheader("Severidad de los incendios según su causa")
-    st.caption("Natural = rayo (código 1). Humana = causas 2 a 12. Sin determinar = código 13. "
-               "Severidad = tamaño del incendio (acres) y proporción de incendios grandes.")
     nivel = st.radio("Agrupar por", ["Grupo (natural / humana)", "Causa (13 categorías)"], horizontal=True, key=f"nivel_{estado}")
     sev = ind.severidad_por_causa(df, estado, "grupo_causa" if nivel.startswith("Grupo") else "causa")
     st.dataframe(sev.round(2))

@@ -108,3 +108,5 @@ def render() -> None:
         df = st.session_state.cuestionario_query_result
         st.caption(f"Filas: {len(df)} | Columnas: {len(df.columns)}")
         st.dataframe(df, use_container_width=True)
+    with st.container(border=True):
+         st.image("https://i.pinimg.com/736x/f5/52/28/f55228345af8a36e75aa939ac16a0348.jpg", use_container_width=True, caption="Aziel, Juan y Laura con 0 horas de sueño", width=250)

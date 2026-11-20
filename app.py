@@ -50,7 +50,7 @@ st.sidebar.caption("Computación II | Estadística y Ciencias Actuariales")
 if secciones[seleccion] is None:
     st.markdown('<div class="eyebrow">FIRE DATA / INVESTIGACIÓN ESTADÍSTICA</div>', unsafe_allow_html=True)
     st.markdown('<h1 class="hero-title">Incendios forestales<br><span>en Estados Unidos</span></h1>', unsafe_allow_html=True)
-    st.markdown('<p class="hero-description">Análisis descriptivo de la evolución temporal y espacial de los incendios forestales en California, Texas y Oregón, durante el período 1992–2015.</p>', unsafe_allow_html=True)
+    st.markdown('<p class="hero-description">¡Hola! Bienvenido a nuestra investigación. Aquí, analizaremos e indagaremos acerca de la evolución temporal y espacial de los incendios forestales en California, Texas y Oregón, durante el período 1992–2015.</p>', unsafe_allow_html=True)
     st.markdown('<div class="tag-row"><span>1992–2015</span><span>CALIFORNIA · TEXAS · OREGÓN</span><span>ESTUDIO DESCRIPTIVO</span></div>', unsafe_allow_html=True)
     st.markdown('<div class="section-label">PANORAMA DE LA INVESTIGACIÓN</div>', unsafe_allow_html=True)
     c1, c2, c3 = st.columns(3, gap="medium")

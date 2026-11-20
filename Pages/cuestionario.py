@@ -495,7 +495,103 @@ ORDER BY "Puesto" ASC, "Estado" ASC;"""
         st.caption(f"Filas: {len(df_p5)} | Columnas: {len(df_p5.columns)}")
         st.dataframe(df_p5, use_container_width=True, hide_index=True)
 
-    with st.container(border=True):
-         st.image("https://i.pinimg.com/736x/f5/52/28/f55228345af8a36e75aa939ac16a0348.jpg", use_container_width=True, caption="Aziel, Juan y Laura con 0 horas de sueño", width=250)
+    st.subheader("Pregunta 6: Estados con Temporadas Parecidas")
+    st.write("Dos estados tienen temporadas de incendios parecidas si reparten sus incendios entre los meses del año de forma similar.")
+    st.write("Trabaja con los estados que tienen al menos 40.000 incendios. Para cada uno calcula qué proporción de sus incendios se descubre en cada mes del año, sumando todos los años. La coincidencia entre dos estados es la suma, sobre los doce meses, de la menor de sus dos proporciones, expresada en porcentaje (100 significa repartos idénticos).")
+    st.write("Para cada estado muestra el estado más parecido y el menos parecido con sus coincidencias (en caso de empate, el primero en orden alfabético), la coincidencia media con todos los demás y su puesto de singularidad: 1 para el estado con menor coincidencia media. Ordena por ese puesto y por estado.")
 
+    default_sql_p6 = """WITH conteo_mensual AS (
+    SELECT
+        STATE                                                       AS estado,
+        CAST(strftime(date(DISCOVERY_DATE), '%m') AS INTEGER)       AS mes,
+        COUNT(*)                                                    AS incendios
+    FROM Fires
+    WHERE STATE IS NOT NULL
+      AND DISCOVERY_DATE IS NOT NULL
+    GROUP BY STATE, mes
+),
+proporciones AS (
+    SELECT
+        estado,
+        mes,
+        incendios * 1.0 / SUM(incendios) OVER (PARTITION BY estado) AS proporcion,
+        SUM(incendios)    OVER (PARTITION BY estado)                AS total_estado
+    FROM conteo_mensual
+),
+elegibles AS (
+    SELECT estado, mes, proporcion
+    FROM proporciones
+    WHERE total_estado >= 40000
+),
+coincidencias AS (
+    SELECT
+        a.estado                                      AS estado,
+        b.estado                                      AS otro_estado,
+        SUM(LEAST(a.proporcion, b.proporcion)) * 100  AS coincidencia
+    FROM elegibles AS a
+    JOIN elegibles AS b
+      ON  b.mes = a.mes
+      AND b.estado <> a.estado
+    GROUP BY a.estado, b.estado
+),
+ranking AS (
+    SELECT
+        estado,
+        otro_estado,
+        coincidencia,
+        ROW_NUMBER() OVER (PARTITION BY estado ORDER BY coincidencia DESC, otro_estado) AS pos_mas_parecido,
+        ROW_NUMBER() OVER (PARTITION BY estado ORDER BY coincidencia ASC,  otro_estado) AS pos_menos_parecido,
+        AVG(coincidencia) OVER (PARTITION BY estado)                                    AS coincidencia_media
+    FROM coincidencias
+)
+SELECT
+    mas.estado                                                   AS "Estado",
+    mas.otro_estado                                              AS "Estado mas parecido",
+    ROUND(mas.coincidencia, 2)                                   AS "Coincidencia con el mas parecido (%)",
+    menos.otro_estado                                            AS "Estado menos parecido",
+    ROUND(menos.coincidencia, 2)                                 AS "Coincidencia con el menos parecido (%)",
+    ROUND(mas.coincidencia_media, 2)                             AS "Coincidencia media (%)",
+    RANK() OVER (ORDER BY mas.coincidencia_media ASC)            AS "Puesto de singularidad"
+FROM (SELECT * FROM ranking WHERE pos_mas_parecido = 1)    AS mas
+JOIN (SELECT * FROM ranking WHERE pos_menos_parecido = 1)  AS menos
+  ON menos.estado = mas.estado
+ORDER BY "Puesto de singularidad", "Estado";"""
+
+    sql_query_p6 = st.text_area(
+        "Consulta SQL",
+        value=default_sql_p6,
+        height=340,
+        key="sql_p6",
+    )
+
+    col1, col2 = st.columns([1, 5])
+    with col1:
+        execute_clicked_p6 = st.button("Ejecutar", type="primary", key="btn_exec_p6")
+    with col2:
+        if st.button("Limpiar caché", key="btn_clear_p6"):
+            run_query.clear()
+            st.toast("Caché de consultas limpiada")
+
+    if "cuestionario_query_result_p6" not in st.session_state:
+        st.session_state.cuestionario_query_result_p6 = None
+
+    if execute_clicked_p6:
+        clean_sql_p6 = sql_query_p6.strip()
+        if not clean_sql_p6:
+            st.warning("Escribe una consulta SQL antes de ejecutar.")
+        else:
+            try:
+                sql_ejecutable_p6 = preparar_sql_duckdb(clean_sql_p6)
+                with st.spinner("Ejecutando consulta..."):
+                    st.session_state.cuestionario_query_result_p6 = run_query(sql_ejecutable_p6)
+            except Exception as e:
+                st.error(f"Error en la consulta: {e}")
+
+    if st.session_state.cuestionario_query_result_p6 is not None:
+        df_p6 = st.session_state.cuestionario_query_result_p6
+        st.caption(f"Filas: {len(df_p6)} | Columnas: {len(df_p6.columns)}")
+        st.dataframe(df_p6, use_container_width=True, hide_index=True)
+
+    with st.container(border=True):
+     st.image("https://i.pinimg.com/736x/f5/52/28/f55228345af8a36e75aa939ac16a0348.jpg", use_container_width=True, caption="Aziel, Juan y Laura con 0 horas de sueño", width=250)
     

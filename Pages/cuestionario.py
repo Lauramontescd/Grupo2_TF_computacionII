@@ -262,20 +262,19 @@ ORDER BY c.FIRE_SIZE_CLASS ASC;
                     st.session_state.cuestionario_query_result = run_query(sql_ejecutable)
             except Exception as e:
                 st.error(f"Error en la consulta: {e}")
-                
     st.subheader("Pregunta 4: Megaincendios simultáneos")
     st.write("Un megaincendio es un incendio de la clase de tamaño más alta (clase G, de 5.000 acres o más). Cuando varios se declaran casi a la vez en un mismo estado, los recursos de extinción se saturan.")
     st.write("Forma todas las parejas de megaincendios distintos del mismo estado cuyas fechas de descubrimiento difieran en tres días o menos. Cada pareja debe contarse una sola vez: el primer incendio es el descubierto antes y, si ambos se descubrieron el mismo día, el de menor identificador.")
     st.write("Para cada estado muestra la cantidad de parejas, la cantidad de megaincendios que tiene y los datos de la pareja de mayor superficie conjunta: nombre, fecha de descubrimiento y superficie de cada incendio, días entre ambos y superficie conjunta. Si un incendio no tiene nombre, indícalo con el texto '(sin nombre)'. Muestra los diez estados con más parejas, de mayor a menor.")
 
-    WITH megaincendios AS (
+    default_sql_p4 = """WITH megaincendios AS (
 
     SELECT
         FOD_ID,
         STATE                                                     AS estado,
         COALESCE(NULLIF(TRIM(FIRE_NAME), ''), '(sin nombre)')     AS nombre,
         date(DISCOVERY_DATE)                                      AS fecha_descubrimiento,
-        CAST(julianday(date(DISCOVERY_DATE)) + 0.5 AS INTEGER)    AS dia_juliano,
+        CAST(julian(date(DISCOVERY_DATE)) + 0.5 AS INTEGER)    AS dia_juliano,
         FIRE_SIZE                                                 AS superficie,
         COUNT(*) OVER (PARTITION BY STATE)                        AS cantidad_megaincendios
     FROM Fires
@@ -331,26 +330,43 @@ WHERE posicion = 1
         WHERE posicion = 1
         ORDER BY cantidad_parejas DESC, estado
         LIMIT 10)
-ORDER BY cantidad_parejas DESC, estado;
-
-   if "cuestionario_query_result" not in st.session_state:
-        st.session_state.cuestionario_query_result = None
-
-    if execute_clicked:
-        clean_sql = sql_query.strip()
-        if not clean_sql:
-            st.warning("Escribe una consulta SQL antes de ejecutar.")
-        else:
-            try:
-                sql_ejecutable = preparar_sql_duckdb(clean_sql)
-                with st.spinner("Ejecutando consulta..."):
-                    st.session_state.cuestionario_query_result = run_query(sql_ejecutable)
-            except Exception as e:
-                st.error(f"Error en la consulta: {e}")
+ORDER BY cantidad_parejas DESC, estado;"""
     
-    if st.session_state.cuestionario_query_result is not None:
-        df = st.session_state.cuestionario_query_result
-        st.caption(f"Filas: {len(df)} | Columnas: {len(df.columns)}")
-        st.dataframe(df, use_container_width=True)
+    sql_query_p4 = st.text_area(
+            "Consulta SQL",
+            value=default_sql_p4,
+            height=340,
+            key="sql_p4",
+        )
+    
+    col1, col2 = st.columns([1, 5])
+    with col1:
+            execute_clicked_p4 = st.button("Ejecutar", type="primary", key="btn_exec_p4")
+    with col2:
+            if st.button("Limpiar caché", key="btn_clear_p4"):
+                run_query.clear()
+                st.toast("Caché de consultas limpiada")
+    
+    if "cuestionario_query_result_p4" not in st.session_state:
+            st.session_state.cuestionario_query_result_p4 = None
+    
+    if execute_clicked_p4:
+            clean_sql_p4 = sql_query_p4.strip()
+            if not clean_sql_p4:
+                st.warning("Escribe una consulta SQL antes de ejecutar.")
+            else:
+                try:
+                    sql_ejecutable_p4 = preparar_sql_duckdb(clean_sql_p4)
+                    with st.spinner("Ejecutando consulta..."):
+                        st.session_state.cuestionario_query_result_p4 = run_query(sql_ejecutable_p4)
+                except Exception as e:
+                    st.error(f"Error en la consulta: {e}")
+
+    if st.session_state.cuestionario_query_result_p4 is not None:
+            df_p4 = st.session_state.cuestionario_query_result_p4
+            st.caption(f"Filas: {len(df_p4)} | Columnas: {len(df_p4.columns)}")
+            st.dataframe(df_p4, use_container_width=True, hide_index=True)
+                
+
     with st.container(border=True):
          st.image("https://i.pinimg.com/736x/f5/52/28/f55228345af8a36e75aa939ac16a0348.jpg", use_container_width=True, caption="Aziel, Juan y Laura con 0 horas de sueño", width=250)

@@ -1,5 +1,6 @@
 ![Banner del proyecto](assets/banner.png)
 ## Aplicativo en vivo [Incendios-Grupo2.streamlit.app](https://grupo2tf.onrender.com) 
+## Aplicativo en vivo [Incendios-Grupo2.Dashboard](https://app.powerbi.com/groups/me/reports/76614565-9e46-44d2-be4f-92f757cc15ca/ae35748b013b18b47e39?experience=power-bi)
 # Análisis de la Evolución Temporal y Espacial de los Incendios en los estados de  California, Texas y Oregón (1992-2015)
 
 Este proyecto busca analizar cómo ha cambiado el comportamiento del fuego en tres estados de Estados Unidos (California, Texas y Oregón) entre 1992 y 2015. La investigación estudia, de forma individual para cada estado, la duración de las temporadas de incendios, la duración de los incendios, la ubicación de los focos más graves y la severidad según el origen del fuego (humano o natural).

@@ -1,0 +1,92 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "7a2079ab51971c9dac07",
+  "position": {
+    "x": 689.90516332982088,
+    "y": 855.80611169652263,
+    "z": 8002,
+    "height": 214,
+    "width": 619,
+    "tabOrder": 8002
+  },
+  "visual": {
+    "visualType": "map",
+    "query": {
+      "queryState": {
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "main fact_fires"
+                    }
+                  },
+                  "Property": "Severity Level"
+                }
+              },
+              "queryRef": "main fact_fires.Severity Level",
+              "nativeQueryRef": "Severity Level"
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "main fact_fires"
+                    }
+                  },
+                  "Property": "Total_Acres_Quemados"
+                }
+              },
+              "queryRef": "main fact_fires.Total_Acres_Quemados",
+              "nativeQueryRef": "Total_Acres_Quemados"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "main fact_fires"
+                    }
+                  },
+                  "Property": "LONGITUDE"
+                }
+              },
+              "queryRef": "main fact_fires.LONGITUDE",
+              "nativeQueryRef": "LONGITUDE"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "main fact_fires"
+                    }
+                  },
+                  "Property": "LATITUDE"
+                }
+              },
+              "queryRef": "main fact_fires.LATITUDE",
+              "nativeQueryRef": "LATITUDE"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

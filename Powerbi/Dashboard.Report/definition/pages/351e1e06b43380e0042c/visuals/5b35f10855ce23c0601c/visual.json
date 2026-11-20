@@ -3,11 +3,11 @@
   "name": "5b35f10855ce23c0601c",
   "position": {
     "x": 30.347734457323497,
-    "y": 305.50052687038988,
-    "z": 8,
+    "y": 224.5732349841939,
+    "z": 7000,
     "height": 631.23287671232879,
     "width": 619.09378292939937,
-    "tabOrder": 8
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "columnChart",
@@ -236,6 +236,38 @@
                       "Value": "'#242424'"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Severidad'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
